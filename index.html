@@ -807,8 +807,8 @@
 				let cts = trueCourse + alph;
 				let wayOverWater = [Math.cos(cts.toRadians()), Math.sin(cts.toRadians())]
 					.numberMul(logIncrement);
-				let stream = [Math.cos(streamDirection.toRadians()), Math.sin(streamDirection.toRadians())]
-					.numberMul(logIncrement * streamVelocity / boatVelocity);
+				let stream = useStream? [Math.cos(streamDirection.toRadians()), Math.sin(streamDirection.toRadians())]
+					.numberMul(logIncrement * streamVelocity / boatVelocity) : [0, 0];
 				let wayOverGround = wayOverWater.vectorAdd(stream);
 				let newLat = lat + wayOverGround[0] / 60;
 				let newLong = long + wayOverGround[1] / 60 / Math.cos(((lat + newLat) / 2).toRadians());
