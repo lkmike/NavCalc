@@ -71,7 +71,7 @@
 				font-size: 100%;
 			}
 
-			.cb {
+			/*.cb {
 				display: inline-block;
 				top: 40%;
 				float: left;
@@ -82,19 +82,8 @@
 				-webkit-transform: scale(1.5);
 				-o-transform: scale(1.5);
 				-moz-transform: scale(1.5);
-			}
+			}*/
 			
-			.cb_label {
-				display: inline-block;
-				width: 20%;
-				text-align: left;
-				padding-left: 20px;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-			}
-
 			.quantity {
 				display: inline-block;
 				width: 55%;
@@ -138,8 +127,72 @@
 				transform: translateY(-50%);
 				float: left;
 			}
-
 			
+			.cb_label {
+				display: inline-block;
+				width: 22%;
+				text-align: left;
+				padding-left: 20px;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+			}
+
+			.switch {
+				position: relative;
+				display: inline-block;
+				width: 10%;
+				height: 80%;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+
+			/* Hide default HTML checkbox */
+			.switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			/* The slider */
+			.slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+			}
+
+			.slider:before {
+				position: absolute;
+				content: "";
+				height: 80%;
+				width: 48%;
+				left: 4px;
+				top: 50%;
+				transform: translateY(-50%);
+				background-color: white;
+			}
+
+			input:checked + .slider {
+				/*background-color: #2196F3;*/
+				background-color: #666;
+			}
+
+			input:focus + .slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .slider:before {
+				-webkit-transform: translate(80%, -50%);
+				-ms-transform: translateX(80%, -50%);
+				transform: translateX(80%, -50%);
+			}
+
+		
 		</style>
 	</head>
 
@@ -172,13 +225,27 @@
 				<span class="quantity">РОЛ</span><input id="dir_log_increment" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".01" value="1.0"></input><span class="unit">M</span>
 			</div>
 			<div class="block">
-				<span class="cb_label">Ветер</span><input class="cb" id="dir_cb_wind" type="checkbox" onchange="dir_CbWindChange()"></input>
+				<span class="cb_label">Ветер</span>
+				<!-- Rectangular switch -->
+				<label class="switch">
+					<input type="checkbox" id="dir_cb_wind" onchange="dir_CbWindChange()">
+					<span class="slider"></span>
+				</label>
+				<!---div class="cbm" id="dir_cb_wind" onclick="dir_CbWindChange()">Учет ветра</div--->
+				<!---label for="dir_cb_wind">Toggle</label><input type="checkbox" id="dir_cb_wind" onchange="dir_CbWindChange()"><label class="control-me">+</label-->
 			</div>
 			<div class="block" id="dir_wind">
 				<span class="quantity"></input>Направление</span><input id="dir_wind_direction" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="0"></input>
 			</div>
 			<div class="block">
-				<span class="cb_label">Течение</span><input class="cb" id="dir_cb_stream" type="checkbox" onchange="dir_CbStreamChange()"></input>
+				<span class="cb_label">Течение</span>
+				<!-- Rectangular switch -->
+				<label class="switch">
+					<input type="checkbox" id="dir_cb_stream" onchange="dir_CbStreamChange()">
+					<span class="slider"></span>
+				</label>
+				<!-- span class="cbm" id="dir_cb_stream" onclick="dir_CbStreamChange()">Учет течения</span-->
+				<!-- span class="cb_label">Течение</span><input class="cb" id="dir_cb_stream" type="checkbox" onchange="dir_CbStreamChange()"></input-->
 			</div>
 			<div class="block" id="dir_stream_dir">
 				<span class="quantity">Скорость</span><input id="dir_stream_velocity" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="0"></input><span class="unit">уз</span>
@@ -383,13 +450,21 @@
 			}
 
 			function dir_CbWindChange (){
-				$("#dir_wind").children().prop('disabled', !$("#dir_cb_wind")[0].checked);
+				if (typeof dir_CbWindChange.state == 'undefined') {
+					dir_CbWindChange.state = true;
+				}
+				dir_CbWindChange.state = !dir_CbWindChange.state;
+				$("#dir_wind").children().prop('disabled', !dir_CbWindChange.state);
 				dir_UpdateAnswers()
 			}
 
 			function dir_CbStreamChange (){
-				$("#dir_stream_dir").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
-				$("#dir_stream_vel").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
+				if (typeof dir_CbStreamChange.state == 'undefined') {
+					dir_CbStreamChange.state = true;
+				}
+				dir_CbStreamChange.state = !dir_CbStreamChange.state;
+				$("#dir_stream_dir").children().prop('disabled', !dir_CbStreamChange.state);
+				$("#dir_stream_vel").children().prop('disabled', !dir_CbStreamChange.state);
 				dir_UpdateAnswers();
 			}
 
@@ -798,9 +873,9 @@
 			document.getElementById("defaultOpen").click();
 
 			//$("#dir_cb_wind")[0].checked = false;
-			//dir_CbWindChange();
+			dir_CbWindChange();
 			//$("#dir_cb_stream")[0].checked = false;
-			//dir_CbStreamChange();
+			dir_CbStreamChange();
 			dir_UpdateAnswers();
 
 			//$("#inv1_cb_wind")[0].checked = false;
