@@ -890,7 +890,7 @@
 				let magneticCourse = trueCourse - declination;
 				let [compassCourse, deviation] = magneticCourse.compassCourseAndDeviation(devTable);
 
-				return [compassCourse, deviation, magneticCourse, trueCourse, alph, cts, beta, cog, logIncrement];
+				return [compassCourse.mod(360.0), deviation, magneticCourse.mod(360.0), trueCourse.mod(360.0), alph, cts.mod(360.0), beta, cog.mod(360.0), logIncrement];
 			}
 
 		</script>
