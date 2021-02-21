@@ -226,26 +226,20 @@
 			</div>
 			<div class="block">
 				<span class="cb_label">Ветер</span>
-				<!-- Rectangular switch -->
 				<label class="switch">
 					<input type="checkbox" id="dir_cb_wind" onchange="dir_CbWindChange()">
 					<span class="slider"></span>
 				</label>
-				<!---div class="cbm" id="dir_cb_wind" onclick="dir_CbWindChange()">Учет ветра</div--->
-				<!---label for="dir_cb_wind">Toggle</label><input type="checkbox" id="dir_cb_wind" onchange="dir_CbWindChange()"><label class="control-me">+</label-->
 			</div>
 			<div class="block" id="dir_wind">
 				<span class="quantity"></input>Направление</span><input id="dir_wind_direction" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="0"></input>
 			</div>
 			<div class="block">
 				<span class="cb_label">Течение</span>
-				<!-- Rectangular switch -->
 				<label class="switch">
 					<input type="checkbox" id="dir_cb_stream" onchange="dir_CbStreamChange()">
 					<span class="slider"></span>
 				</label>
-				<!-- span class="cbm" id="dir_cb_stream" onclick="dir_CbStreamChange()">Учет течения</span-->
-				<!-- span class="cb_label">Течение</span><input class="cb" id="dir_cb_stream" type="checkbox" onchange="dir_CbStreamChange()"></input-->
 			</div>
 			<div class="block" id="dir_stream_dir">
 				<span class="quantity">Скорость</span><input id="dir_stream_velocity" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="0"></input><span class="unit">уз</span>
@@ -304,13 +298,21 @@
 				<span class="quantity">РОЛ</span><input id="inv1_log_increment" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".01" value="1.0"></input><span class="unit">M</span>
 			</div>
 			<div class="block">
-				<span class="cb_label">Ветер</span><input class="cb" id="inv1_cb_wind" type="checkbox" onchange="inv1_CbWindChange()"></input>
+				<span class="cb_label">Ветер</span>
+				<label class="switch">
+					<input type="checkbox" id="inv1_cb_wind" onchange="inv1_CbWindChange()">
+					<span class="slider"></span>
+				</label>
 			</div>
 			<div class="block" id="inv1_wind">
 				<span class="quantity"></input>Направление</span><input id="inv1_wind_direction" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="0"></input>
 			</div>
 			<div class="block">
-				<span class="cb_label">Течение</span><input class="cb" id="inv1_cb_stream" type="checkbox" onchange="inv1_CbStreamChange()"></input>
+				<span class="cb_label">Течение</span>
+				<label class="switch">
+					<input type="checkbox" id="inv1_cb_stream" onchange="inv1_CbStreamChange()">
+					<span class="slider"></span>
+				</label>
 			</div>
 			<div class="block" id="inv1_stream_dir">
 				<span class="quantity">Скорость</span><input id="inv1_stream_velocity" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="0"></input><span class="unit">уз</span>
@@ -369,13 +371,21 @@
 				<span class="quantity">Скорость хода</span><input id="inv2_velocity" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="6.0"></input><span class="unit">уз</span>
 			</div>
 			<div class="block">
-				<span class="cb_label">Ветер</span><input class="cb" id="inv2_cb_wind" type="checkbox" onchange="inv2_CbWindChange()"></input>
+				<span class="cb_label">Ветер</span>
+				<label class="switch">
+					<input type="checkbox" id="inv2_cb_wind" onchange="inv2_CbWindChange()">
+					<span class="slider"></span>
+				</label>
 			</div>
 			<div class="block" id="inv2_wind">
 				<span class="quantity"></input>Направление</span><input id="inv2_wind_direction" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="0"></input>
 			</div>
 			<div class="block">
-				<span class="cb_label">Течение</span><input class="cb" id="inv2_cb_stream" type="checkbox" onchange="inv2_CbStreamChange()"></input>
+				<span class="cb_label">Течение</span>
+				<label class="switch">
+					<input type="checkbox" id="inv2_cb_stream" onchange="inv2_CbStreamChange()">
+					<span class="slider"></span>
+				</label>
 			</div>
 			<div class="block" id="inv2_stream_dir">
 				<span class="quantity">Скорость</span><input id="inv2_stream_velocity" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="0"></input><span class="unit">уз</span>
@@ -450,21 +460,13 @@
 			}
 
 			function dir_CbWindChange (){
-				if (typeof dir_CbWindChange.state == 'undefined') {
-					dir_CbWindChange.state = true;
-				}
-				dir_CbWindChange.state = !dir_CbWindChange.state;
-				$("#dir_wind").children().prop('disabled', !dir_CbWindChange.state);
+				$("#dir_wind").children().prop('disabled', !$("#dir_cb_wind")[0].checked);
 				dir_UpdateAnswers()
 			}
 
 			function dir_CbStreamChange (){
-				if (typeof dir_CbStreamChange.state == 'undefined') {
-					dir_CbStreamChange.state = true;
-				}
-				dir_CbStreamChange.state = !dir_CbStreamChange.state;
-				$("#dir_stream_dir").children().prop('disabled', !dir_CbStreamChange.state);
-				$("#dir_stream_vel").children().prop('disabled', !dir_CbStreamChange.state);
+				$("#dir_stream_dir").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
+				$("#dir_stream_vel").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
 				dir_UpdateAnswers();
 			}
 
@@ -872,22 +874,16 @@
 			
 			document.getElementById("defaultOpen").click();
 
-			//$("#dir_cb_wind")[0].checked = false;
 			dir_CbWindChange();
-			//$("#dir_cb_stream")[0].checked = false;
 			dir_CbStreamChange();
 			dir_UpdateAnswers();
 
-			//$("#inv1_cb_wind")[0].checked = false;
-			//inv1_CbWindChange();
-			//$("#inv1_cb_stream")[0].checked = false;
-			//inv1_CbStreamChange();
+			inv1_CbWindChange();
+			inv1_CbStreamChange();
 			inv1_UpdateAnswers();
 			
-			//$("#inv2_cb_wind")[0].checked = false;
-			//inv2_CbWindChange();
-			//$("#inv2_cb_stream")[0].checked = false;
-			//inv2_CbStreamChange();
+			inv2_CbWindChange();
+			inv2_CbStreamChange();
 			inv2_UpdateAnswers();
 			
 			
