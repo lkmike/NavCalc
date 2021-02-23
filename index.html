@@ -238,65 +238,61 @@
 		<div id="DirectProblem" class="tabcontent">
 			<div class="block">
 				<span class="quantity">Данные о девиации</span>
-				<select size="1" id="dir_devtable" class="input_field" onchange="dir_UpdateAnswers()">
-					<option value="tab1">Табл. №1</option>
-					<option value="tab2">Табл. №2</option>
-					<option value="tab2.1">Табл. №2.1</option>
-					<option value="tabnone">Нет</option>
+				<select size="1" id="dir_devtable" class="input_field dev_table">
 				</select>
 			</div>
 			<div class="block">
 				<span class="quantity">Магнитное склонение</span>
-				<input id="dir_declination" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="-180" max="180" step=".1" value="16.7" />
+				<input id="dir_declination" class="input_field" type="number" min="-180" max="180" step=".1" value="16.7" />
 			</div>
 			<div class="block">
 				<span class="quantity">Широта исходной точки</span>
-				<input id="dir_lat" class="input_field degmin" onchange="dir_UpdateAnswers()" type="text" value="69°10.95′" />
+				<input id="dir_lat" class="input_field degmin" type="text" value="69°10.95′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Долгота исходной точки</span>
-				<input id="dir_long" class="input_field degmin" onchange="dir_UpdateAnswers()" type="text" value="36°07.00′" />
+				<input id="dir_long" class="input_field degmin" type="text" value="36°07.00′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Компасный курс</span>
-				<input id="dir_compass_course" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="25" />
+				<input id="dir_compass_course" class="input_field" type="number" min="0" max="359.99" step=".01" value="25" />
 			</div>
 			<div class="block">
 				<span class="quantity">Скорость хода</span>
-				<input id="dir_velocity" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="8.0" />
+				<input id="dir_velocity" class="input_field" type="number" min="0" max="100" step=".1" value="8.0" />
 				<span class="unit">уз</span>
 			</div>
 			<div class="block">
 				<span class="quantity">РОЛ</span>
-				<input id="dir_log_increment" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".01" value="5.8" />
+				<input id="dir_log_increment" class="input_field" type="number" min="0" max="100" step=".01" value="5.8" />
 				<span class="unit">M</span>
 			</div>
 			<div class="block">
 				<span class="cb_label">Ветер</span>
 				<label class="switch">
-					<input type="checkbox" id="dir_cb_wind" onchange="dir_CbWindChange()">
+					<input type="checkbox" id="dir_cb_wind">
 					<span class="slider"></span>
 				</label>
 			</div>
 			<div class="block" id="dir_wind">
 				<span class="quantity">Направление</span>
-				<input id="dir_wind_direction" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="315" />
+				<input id="dir_wind_direction" class="input_field" type="number" min="0" max="359.99" step=".01" value="315" />
 			</div>
 			<div class="block">
 				<span class="cb_label">Течение</span>
 				<label class="switch">
-					<input type="checkbox" id="dir_cb_stream" onchange="dir_CbStreamChange()">
+					<input type="checkbox" id="dir_cb_stream">
 					<span class="slider"></span>
 				</label>
 			</div>
 			<div class="block" id="dir_stream_dir">
 				<span class="quantity">Скорость</span>
-				<input id="dir_stream_velocity" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="3" />
+				<input id="dir_stream_velocity" class="input_field" type="number" min="0" max="100" step=".1" value="3" />
 				<span class="unit">уз</span>
 			</div>
 			<div class="block" id="dir_stream_vel">
 				<span class="quantity">Направление</span>
-				<input id="dir_stream_direction" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".1" value="112">
+				<input id="dir_stream_direction" class="input_field" type="number" min="0" max="359.99" step=".1" value="112">
 			</div>
 			<hr>
 			<!-- ----------------------------------------------------------------------------------------- -->
@@ -332,65 +328,61 @@
 		<div id="InverseProblem1" class="tabcontent">
 			<div class="block">
 				<span class="quantity">Данные о девиации</span>
-				<select size="1" id="inv1_devtable" class="input_field" onchange="inv1_UpdateAnswers()">
-					<option value="tab1">Табл. №1</option>
-					<option value="tab2">Табл. №2</option>
-					<option value="tab2.1">Табл. №2.1</option>
-					<option value="tabnone">Нет</option>
+				<select size="1" id="inv1_devtable" class="input_field dev_table">
 				</select>
 			</div>
 			<div class="block">
 				<span class="quantity">Магнитное склонение</span>
-				<input id="inv1_declination" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="-180" max="180" step=".01" value="16.7" />
+				<input id="inv1_declination" class="input_field" type="number" min="-180" max="180" step=".01" value="16.7" />
 			</div>
 			<div class="block">
 				<span class="quantity">Широта исходной точки</span>
-				<input id="inv1_lat" class="input_field degmin" onchange="inv1_UpdateAnswers()" type="text" value="69°10.95′" />
+				<input id="inv1_lat" class="input_field degmin" type="text" value="69°10.95′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Долгота исходной точки</span>
-				<input id="inv1_long" class="input_field degmin" onchange="inv1_UpdateAnswers()" type="text" value="36°07.00′" />
+				<input id="inv1_long" class="input_field degmin" type="text" value="36°07.00′" />
 			</div>
 			<div class="block">
 				<span class="a_quantity">ПУ<sub>&alpha;&beta;</sub></span>
-				<input id="inv1_PUab" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="64.7" />
+				<input id="inv1_PUab" class="input_field" type="number" min="0" max="359.99" step=".01" value="64.7" />
 			</div>
 			<div class="block">
 				<span class="quantity">Скорость хода</span>
-				<input id="inv1_velocity" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="8.0" />
+				<input id="inv1_velocity" class="input_field" type="number" min="0" max="100" step=".1" value="8.0" />
 				<span class="unit">уз</span>
 			</div>
 			<div class="block">
 				<span class="quantity">РОЛ</span>
-				<input id="inv1_log_increment" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".01" value="5.8" />
+				<input id="inv1_log_increment" class="input_field" type="number" min="0" max="100" step=".01" value="5.8" />
 				<span class="unit">M</span>
 			</div>
 			<div class="block">
 				<span class="cb_label">Ветер</span>
 				<label class="switch">
-					<input type="checkbox" id="inv1_cb_wind" onchange="inv1_CbWindChange()">
+					<input type="checkbox" id="inv1_cb_wind">
 					<span class="slider"></span>
 				</label>
 			</div>
 			<div class="block" id="inv1_wind">
 				<span class="quantity">Направление</span>
-				<input id="inv1_wind_direction" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="315" />
+				<input id="inv1_wind_direction" class="input_field" type="number" min="0" max="359.99" step=".01" value="315" />
 			</div>
 			<div class="block">
 				<span class="cb_label">Течение</span>
 				<label class="switch">
-					<input type="checkbox" id="inv1_cb_stream" onchange="inv1_CbStreamChange()">
+					<input type="checkbox" id="inv1_cb_stream">
 					<span class="slider"></span>
 				</label>
 			</div>
 			<div class="block" id="inv1_stream_dir">
 				<span class="quantity">Скорость</span>
-				<input id="inv1_stream_velocity" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="3" />
+				<input id="inv1_stream_velocity" class="input_field" type="number" min="0" max="100" step=".1" value="3" />
 				<span class="unit">уз</span>
 			</div>
 			<div class="block" id="inv1_stream_vel">
 				<span class="quantity">Направление</span>
-				<input id="inv1_stream_direction" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".1" value="112">
+				<input id="inv1_stream_direction" class="input_field" type="number" min="0" max="359.99" step=".1" value="112">
 			</div>
 			<hr>
 			<!-- ----------------------------------------------------------------------------------------- -->
@@ -426,64 +418,60 @@
 		<div id="InverseProblem2" class="tabcontent">
 			<div class="block">
 				<span class="quantity">Данные о девиации</span>
-				<select size="1" id="inv2_devtable" class="input_field" onchange="inv2_UpdateAnswers()">
-					<option value="tab1">Табл. №1</option>
-					<option value="tab2">Табл. №2</option>
-					<option value="tab2.1">Табл. №2.1</option>
-					<option value="tabnone">Нет</option>
+				<select size="1" id="inv2_devtable" class="input_field dev_table">
 				</select>
 			</div>
 			<div class="block">
 				<span class="quantity">Магнитное склонение</span>
-				<input id="inv2_declination" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="-180" max="180" step=".01" value="16.7" />
+				<input id="inv2_declination" class="input_field" type="number" min="-180" max="180" step=".01" value="16.7" />
 			</div>
 			<div class="block">
 				<span class="quantity">Широта исходной точки</span>
-				<input id="inv2_lat" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="69°10.95′" />
+				<input id="inv2_lat" class="input_field degmin" type="text" value="69°10.95′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Долгота исходной точки</span>
-				<input id="inv2_long" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="36°07.00′" />
+				<input id="inv2_long" class="input_field degmin" type="text" value="36°07.00′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Широта конечной точки</span>
-				<input id="inv2_new_lat" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="69°13.96′" />
+				<input id="inv2_new_lat" class="input_field degmin" type="text" value="69°13.96′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Долгота конечной точки</span>
-				<input id="inv2_new_long" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="36°24.96′" />
+				<input id="inv2_new_long" class="input_field degmin" type="text" value="36°24.96′" />
 			</div>
 			<div class="block">
 				<span class="quantity">Скорость хода</span>
-				<input id="inv2_velocity" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="8.0" />
+				<input id="inv2_velocity" class="input_field" type="number" min="0" max="100" step=".1" value="8.0" />
 				<span class="unit">уз</span>
 			</div>
 			<div class="block">
 				<span class="cb_label">Ветер</span>
 				<label class="switch">
-					<input type="checkbox" id="inv2_cb_wind" onchange="inv2_CbWindChange()">
+					<input type="checkbox" id="inv2_cb_wind">
 					<span class="slider"></span>
 				</label>
 			</div>
 			<div class="block" id="inv2_wind">
 				<span class="quantity">Направление</span>
-				<input id="inv2_wind_direction" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="315" />
+				<input id="inv2_wind_direction" class="input_field" type="number" min="0" max="359.99" step=".01" value="315" />
 			</div>
 			<div class="block">
 				<span class="cb_label">Течение</span>
 				<label class="switch">
-					<input type="checkbox" id="inv2_cb_stream" onchange="inv2_CbStreamChange()">
+					<input type="checkbox" id="inv2_cb_stream">
 					<span class="slider"></span>
 				</label>
 			</div>
 			<div class="block" id="inv2_stream_dir">
 				<span class="quantity">Скорость</span>
-				<input id="inv2_stream_velocity" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="3" />
+				<input id="inv2_stream_velocity" class="input_field" type="number" min="0" max="100" step=".1" value="3" />
 				<span class="unit">уз</span>
 			</div>
 			<div class="block" id="inv2_stream_vel">
 				<span class="quantity">Направление</span>
-				<input id="inv2_stream_direction" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="359.99" step=".1" value="112">
+				<input id="inv2_stream_direction" class="input_field" type="number" min="0" max="359.99" step=".1" value="112">
 			</div>
 			<hr>
 			<!-- ----------------------------------------------------------------------------------------- -->
@@ -520,33 +508,50 @@
 			<h1>Таблицы девиации</h1>
 			<div id="dev_tables">
 			</div>
+			<h1>Дрейф в зависимости от направления ветра</h1>
+			<div id="dev_leeway">
+			</div>
 		</div>
 
 
 		<script>
 			"use strict"
 			
-			const devTables = [[
-				-2.50, -0.50, 1.6, 4.4, 7.6, 11.1, 14, 16.5, 18.7, 20.1, 20.8, 19.4,
-				16.7, 13.4, 9.8, 6.9, 4.6, 2.5, 1.1, 0.9, -1.20, -3.30, -6.50, -10.30, -13.20, -15.70,
-				-17.90, -19.20, -18.10, -16.20, -13.90, -10.60, -8.30, -6.20, -4.40, -2.90, -2.50,
-				-0.50
-			], 
-			[
-				-2.5, -2.2, -2.1, -2.2, -2.4, -2.8, -3.4, -4.1, -4.7, -5.3, -5.6, -5.7, -5.4, -4.7, 
-				-3.6, -2.3, -0.7, 0.9, 2.6, 4.0, 5.2, 6.0, 6.4, 6.3, 5.7, 4.8, 3.7, 2.4, 1.0, -0.2, -1.2,
-				-2.0, -2.6, -2.8, -2.8, -2.7, -2.5, -2.2
-			],
-			[
-				3.2, 2.4, 1.8, 1.4, 0.7, 0.0, -1, -2.1, -2.8, -3.8, -4.6, -5.2, -5.6, -6.0, 
-				-5.7, -5.2, -4.6, -3.5, -2.4, -1.0, 0.4, 1.8, 2.8, 3.8, 4.9, 5.6, 6.0, 6.3, 
-				6.4, 6.0, 5.6, 5.2, 4.6, 4.2, 3.8, 3.5, 3.2, 3.4
-			],
-			[
-				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
-				0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-			]];
+			const devTables = [
+				{
+					tag: "Нет",
+					data: [
+						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+						0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+					]
+				},
+				{
+					tag: "Табл. №1",
+					data: [
+						-2.50, -0.50, 1.6, 4.4, 7.6, 11.1, 14, 16.5, 18.7, 20.1, 20.8, 19.4,
+						16.7, 13.4, 9.8, 6.9, 4.6, 2.5, 1.1, 0.9, -1.20, -3.30, -6.50, -10.30, -13.20, -15.70,
+						-17.90, -19.20, -18.10, -16.20, -13.90, -10.60, -8.30, -6.20, -4.40, -2.90, -2.50,
+						-0.50
+					]
+				}, 
+				{
+					tag: "Табл. №2",
+					data: [
+						-2.5, -2.2, -2.1, -2.2, -2.4, -2.8, -3.4, -4.1, -4.7, -5.3, -5.6, -5.7, -5.4, -4.7, 
+						-3.6, -2.3, -0.7, 0.9, 2.6, 4.0, 5.2, 6.0, 6.4, 6.3, 5.7, 4.8, 3.7, 2.4, 1.0, -0.2, -1.2,
+						-2.0, -2.6, -2.8, -2.8, -2.7, -2.5, -2.2
+					]
+				},
+				{
+					tag: "Табл. №2.1",
+					data: [
+							3.2, 2.4, 1.8, 1.4, 0.7, 0.0, -1, -2.1, -2.8, -3.8, -4.6, -5.2, -5.6, -6.0, 
+							-5.7, -5.2, -4.6, -3.5, -2.4, -1.0, 0.4, 1.8, 2.8, 3.8, 4.9, 5.6, 6.0, 6.3, 
+							6.4, 6.0, 5.6, 5.2, 4.6, 4.2, 3.8, 3.5, 3.2, 3.4
+						]
+				}
+			];
 			
 			
 			function dir_UpdateAnswers() {
@@ -565,10 +570,12 @@
 				let streamDirection = parseFloat($("#dir_stream_direction")[0].value);
 				let streamVelocity = parseFloat($("#dir_stream_velocity")[0].value);
 				
+				console.log($("#dir_devtable")[0].selectedIndex)
+				
 				let [newLat, newLong, deviation, magneticCourse, trueCourse, alpha, pua, beta, puab] = 
 					directProblem(declination, latitude, longitude, compassCourse, velocity, logIncrement,
 						windDirection, streamVelocity, streamDirection, $("#dir_cb_wind")[0].checked, $("#dir_cb_stream")[0].checked, 
-						devTables[$("#dir_devtable")[0].selectedIndex]);
+						devTables[$("#dir_devtable")[0].selectedIndex].data);
 			
 				$("#dir_new_lat")[0].innerHTML = newLat.toDMText();
 				$("#dir_new_long")[0].innerHTML = newLong.toDMText();
@@ -611,7 +618,7 @@
 				let [newLat, newLong, compassCourse, deviation, magneticCourse, trueCourse, alpha, pua, beta] = 
 					inverseProblem1(declination, latitude, longitude, PUab, velocity, logIncrement,
 						windDirection, streamVelocity, streamDirection, $("#inv1_cb_wind")[0].checked, $("#inv1_cb_stream")[0].checked,
-						devTables[$("#inv1_devtable")[0].selectedIndex]);
+						devTables[$("#inv1_devtable")[0].selectedIndex].data);
 
 				$("#inv1_new_lat")[0].innerHTML = newLat.toDMText();
 				$("#inv1_new_long")[0].innerHTML = newLong.toDMText();
@@ -654,7 +661,7 @@
 				let [compassCourse, deviation, magneticCourse, trueCourse, alpha, pua, beta, puab, logIncrement] = 
 					inverseProblem2(declination, latitude, longitude, newLat, newLong, velocity, 
 						windDirection, streamVelocity, streamDirection, $("#inv2_cb_wind")[0].checked, $("#inv2_cb_stream")[0].checked,
-						devTables[$("#inv2_devtable")[0].selectedIndex]);
+						devTables[$("#inv2_devtable")[0].selectedIndex].data);
 
 				$("#inv2_compass_course")[0].innerHTML = compassCourse.toFixed(1).toString();
 				$("#inv2_deviation")[0].innerHTML = deviation.toFixed(1).toString();
@@ -806,10 +813,6 @@
 				return Math.sqrt(this.scalarMul(this));
 			}
 
-			Array.prototype.unitVec = function () {
-				return this.numberMul(1 / this.norm());
-			}
-
 			Array.prototype.vector2Mul = function (other) {
 				return this[0] * other[1] - this[1] * other[0];
 			}
@@ -933,17 +936,18 @@
 			
 			function drawDevTables() {
 				let s = "";
-				for (let i = 0; i < $("#dir_devtable")[0].length - 1; i++) {
-					s += "<h2>" + $("#dir_devtable")[0].childNodes[2 * i + 1].text + "</h2>";
+				for (let i = 1; i < devTables.length; i++) {
+					s += "<h2>" + devTables[i].tag + "</h2>";
 					s += '<table>';
-					for (let j = 0; j < (devTables[i].length - 2) / 2; j++) {
-						s += '<tr><td>' + (j * 10).toString() + '</td><td>' + devTables[i][j].toFixed(1).toString() + '</td><td>'  
-							+ ((devTables[i].length / 2 - 1 + j) * 10).toString() + '</td><td>' + devTables[i][devTables[i].length / 2 - 1 + j].toFixed(1).toString() + '</td></tr>';
+					for (let j = 0; j < (devTables[i].data.length - 2) / 2; j++) {
+						s += '<tr><td>' + (j * 10).toString() + '</td><td>' + devTables[i].data[j].toFixed(1).toString() + '</td><td>'  
+							+ ((devTables[i].data.length / 2 - 1 + j) * 10).toString() + '</td><td>' + devTables[i].data[devTables[i].data.length / 2 - 1 + j].toFixed(1).toString() + '</td></tr>';
 					}
 					s += '</table><hr color="#ccc">';
 				}
 				$("#dev_tables")[0].innerHTML = s;
 			}
+			
 
 			$(function(){
 				$(document).on('click','input[type=text]',function(){ this.select(); });
@@ -993,22 +997,46 @@
 				cssRules.setCSSProperty(".cb", "-o-transform",  "scale(1.5)");
 				cssRules.setCSSProperty(".cb", "-moz-transform:","scale(1.5)");
 			}			
+
+			{let dropboxes = $(".dev_table");
+			for (let item of dropboxes) {
+				for (let i = 0; i < devTables.length; i++) {
+					let opt = new Option(i+1, i);
+					opt.text = devTables[i].tag;
+					item.options[item.options.length] = opt;
+				}
+				item.selectedIndex = 1;
+			}}
 			
-			document.getElementById("defaultOpen").click();
+			for (let item of $(".input_field")) {
+				if (item.id.match(/^dir/)) {
+					item.onchange = dir_UpdateAnswers;
+				}
+				if (item.id.match(/^inv1/)) {
+					item.onchange = inv1_UpdateAnswers;
+				}
+				if (item.id.match(/^inv2/)) {
+					item.onchange = inv2_UpdateAnswers;
+				}
+			}
 
 			dir_CbWindChange();
 			dir_CbStreamChange();
-			dir_UpdateAnswers();
+			$("#dir_cb_wind")[0].onchange = dir_CbWindChange;
+			$("#dir_cb_stream")[0].onchange = dir_CbStreamChange;
 
 			inv1_CbWindChange();
 			inv1_CbStreamChange();
-			inv1_UpdateAnswers();
+			$("#inv1_cb_wind")[0].onchange = inv1_CbWindChange;
+			$("#inv1_cb_stream")[0].onchange = inv1_CbStreamChange;
 			
 			inv2_CbWindChange();
 			inv2_CbStreamChange();
-			inv2_UpdateAnswers();
+			$("#inv2_cb_wind")[0].onchange = inv2_CbWindChange;
+			$("#inv2_cb_stream")[0].onchange = inv2_CbStreamChange;
 			
 			drawDevTables();
+			document.getElementById("defaultOpen").click();
 			
 		</script>
 	</body>
