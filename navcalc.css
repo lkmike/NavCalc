@@ -48,6 +48,28 @@ body {
 	font-family: sans-serif;
 }
 
+.valid .block {
+	background-color: #f0fff0;
+	height: 70px;
+	padding: 20px;
+	position: relative;
+	border-width: 1px;
+	border-color: #dddddd;
+	border-style: dashed;
+	font-family: sans-serif;
+}
+
+.invalid .block {
+	background-color: #fff0f0;
+	height: 70px;
+	padding: 20px;
+	position: relative;
+	border-width: 1px;
+	border-color: #dddddd;
+	border-style: dashed;
+	font-family: sans-serif;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

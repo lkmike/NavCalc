@@ -315,7 +315,7 @@
 		<script>
 			"use strict"
 			
-			const devTables = [
+			let devTables = [
 				{
 					tag: "Нет",
 					data: [
@@ -883,16 +883,25 @@
 				}
 			}			
 
-			{let dropboxes = $(".dev_table");
-			for (let item of dropboxes) {
-				for (let i = 0; i < devTables.length; i++) {
-					let opt = new Option(i+1, i);
-					opt.text = devTables[i].tag;
-					item.options[item.options.length] = opt;
+			function setupDevSelectors(selIndex = -1) {let dropboxes = $(".dev_table");
+				for (let item of dropboxes) {
+					let si = item.selectedIndex;
+					for (let i = item.length - 1; i >= 0; i--) {
+						item.options[i] = null;
+					}
+					item.options = [];
+					for (let i = 0; i < devTables.length; i++) {
+						let opt = new Option(i + 1, i);
+						opt.text = devTables[i].tag;
+						item.options[item.options.length] = opt;
+					}
+					item.selectedIndex = (selIndex > -1) ? selIndex: si;
 				}
-				item.selectedIndex = 1;
-			}}
+			}
 			
+			setupDevSelectors(1);
+			
+		
 			for (let item of $(".input_field")) {
 				if (item.id.match(/^dir/)) {
 					item.onchange = dir_UpdateAnswers;
@@ -903,6 +912,16 @@
 				if (item.id.match(/^inv2/)) {
 					item.onchange = inv2_UpdateAnswers;
 				}
+			}
+
+			for (item of $(".dev_table")) {
+				item.onchange = function() {
+						console.log("Select %d", this.selectedIndex)
+						setupDevSelectors(this.selectedIndex);
+						dir_UpdateAnswers();
+						inv1_UpdateAnswers();
+						inv2_UpdateAnswers();
+					}
 			}
 
 			dir_CbWindChange();
@@ -926,14 +945,21 @@
 			let modalDevTable = $("#new_dev")[0];
 			//let closeBtn = document.querySelector(".close-btn")
 			modalBtn.onclick = function(){
-				$("#new_dev_header")[0].innerHTML = "Название";
+				$("#new_dev_header")[0].innerHTML = "Новая таблица девиации";
+				$("#new_dev_table")[0].innerHTML = 
+					'<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;"> \
+						<label for="dev_new_name" style="margin-right:20px;">Название:</label> \
+						<input style="font-size:100%; background-color:white; position:relative; padding:4px; width:60%; height:auto; margin:0px;" id="dev_new_name" type="text" /> \
+					</div> \
+					<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;" >Введите 36 значений девиации от 0° до 350° через пробел</div> \
+					<textarea id="deviations" inputmode="numeric" rows="15"\
+					style="font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:80%; height:auto; margin:auto;" ></textarea>'; 
+				$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
+					+ '<button class="just_button" id="cancel">Отмена</button></div>';
+
 				let newTable = {tag: "Нет", data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
 						0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]};
-				$("#new_dev_table")[0].innerHTML = '<textarea  inputmode="numeric" rows="15"\
-					style="font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:90%; height:auto; margin:auto;"></textarea>'; 
-				$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
-					+ '<button class="just_button" id="cancel">Отмена</button></div>';
 				$("#cancel")[0].onclick = function() {
 					modalDevTable.style.display = "none";
 				}
@@ -941,6 +967,9 @@
 					let [ok, table] = parseDevTable($("#new_dev_table")[0].innerHTML);
 					if (ok) {
 						modalDevTable.style.display = "none";
+						devTables[devTables.length] = {tag: $("#dev_new_name")[0].value, data: table};
+						setupDevSelectors(-1);
+						drawDevTables();
 					}
 				}
 				
@@ -950,8 +979,22 @@
 			document.getElementById("defaultOpen").click();
 			
 			function parseDevTable(html) {
-				let tableRows = $("#new_dev_table")[0].children[0].children[0].children;
-				return [false, false];
+				let deviations = $("#deviations")[0].value.split(/\s+/).map(parseFloat);
+				let s = "";
+				let valid = true;
+				for (let i = 0; i < deviations.length; i++) {
+					s += deviations[i].toString() + " ";
+					if (isNaN(deviations[i])) {
+						valid = false;
+					}
+				}
+				for (let i = deviations.length; i < 36; i++) {
+					s += NaN.toString() + " ";
+					valid = false;
+				}
+				$("#deviations")[0].value = s;
+				
+				return [valid, deviations];
 			}
 			
 		</script>
