@@ -618,25 +618,18 @@
 				$("#dir_beta")[0].innerHTML = beta.toFixed(1).toString();
 				$("#dir_PUab")[0].innerHTML = puab.toFixed(1).toString();
 
-				let blocks = $("#DirectProblem").find(".block.invalid");
-				console.log(blocks)
-				for (let item of blocks) {
-					item.classList.remove("invalid");
-				}
-				for (let item of blocks) {
-					item.classList.add("valid");
-				}
+				answersSetState("#DirectProblem", "valid");
 			}
 
 			function dir_CbWindChange (){
 				$("#dir_wind").children().prop('disabled', !$("#dir_cb_wind")[0].checked);
-				dir_UpdateAnswers()
+				answersSetState("#DirectProblem", "invalid");
 			}
 
 			function dir_CbStreamChange (){
 				$("#dir_stream_dir").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
 				$("#dir_stream_vel").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
-				dir_UpdateAnswers();
+				answersSetState("#DirectProblem", "invalid");
 			}
 
 			function inv1_UpdateAnswers() {
@@ -670,24 +663,18 @@
 				$("#inv1_PUa")[0].innerHTML = pua.toFixed(1).toString();
 				$("#inv1_beta")[0].innerHTML = beta.toFixed(1).toString();
 				
-				let blocks = $("#InverseProblem1").find(".block.invalid");
-				for (let item of blocks) {
-					item.classList.remove("invalid");
-				}
-				for (let item of blocks) {
-					item.classList.add("valid");
-				}
+				answersSetState("#InverseProblem1", "valid");
 			}
 
 			function inv1_CbWindChange (){
 				$("#inv1_wind").children().prop('disabled', !$("#inv1_cb_wind")[0].checked);
-				inv1_UpdateAnswers()
+				answersSetState("#InverseProblem1", "invalid");
 			}
 
 			function inv1_CbStreamChange (){
 				$("#inv1_stream_dir").children().prop('disabled', !$("#inv1_cb_stream")[0].checked);
 				$("#inv1_stream_vel").children().prop('disabled', !$("#inv1_cb_stream")[0].checked);
-				inv1_UpdateAnswers();
+				answersSetState("#InverseProblem1", "invalid");
 			}
 
 			function inv2_UpdateAnswers() {
@@ -721,24 +708,18 @@
 				$("#inv2_PUab")[0].innerHTML = puab.toFixed(1).toString();
 				$("#inv2_log_increment")[0].innerHTML = logIncrement.toFixed(1).toString();
 
-				let blocks = $("#InverseProblem2").find(".block.invalid");
-				for (let item of blocks) {
-					item.classList.remove("invalid");
-				}
-				for (let item of blocks) {
-					item.classList.add("valid");
-				}
+				answersSetState("#InverseProblem2", "valid");
 			}
 
 			function inv2_CbWindChange (){
 				$("#inv2_wind").children().prop('disabled', !$("#inv2_cb_wind")[0].checked);
-				inv2_UpdateAnswers()
+				answersSetState("#InverseProblem2", "invalid");
 			}
 
 			function inv2_CbStreamChange (){
 				$("#inv2_stream_dir").children().prop('disabled', !$("#inv2_cb_stream")[0].checked);
 				$("#inv2_stream_vel").children().prop('disabled', !$("#inv2_cb_stream")[0].checked);
-				inv2_UpdateAnswers();
+				answersSetState("#InverseProblem2", "invalid");
 			}
 			
 		</script>
@@ -767,58 +748,19 @@
 			}
 			
 			function drawDevTable(table, editable=false) {
-					//let s = '<table><colgroup><col><col style="background-color:red contenteditable:true" ><col><col style="background-color:red" contenteditable="true" ></colgroup>';
-					let e = editable ? ' contenteditable="true" inputmode="decimal" \
-						onclick="document.execCommand(\'selectAll\',false,null)" \
-						oninput="tabeditInput(this)" onblur="tabeditSubmit(this)" ' : '';
-					let s = '<table>';
-					// Each table contains 36 rows plus 2 extra rows which are repeated row0 and row1
-					maxIndex = (table.data.length - 2) / 2;
-					for (let j = 0; j < maxIndex; j++) {
-						s += '<tr><td>' + (j * 10).toString() + '</td><td' + e + '>' + table.data[j].toFixed(1).toString() + '</td><td>'  
-							+ ((maxIndex + j) * 10).toString() + '</td><td' + e +'>' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
-					}
-					s += '</table>';
-					return s;
-			}
-			
-			function tabeditClick() {
-				this.select; 
-			}
-			
-			function tabeditSubmit(e) {
-				if (e.childNodes.length > 0){
-					let s = e.childNodes[0].data;
-
-					for (let i = e.childNodes.length - 1; i >= 0; i--) {
-						e.childNodes[i].remove();
-					}
-					
-					e.insertBefore(new Text((s === undefined) ? "0.0": s), undefined);
+				//let s = '<table><colgroup><col><col style="background-color:red contenteditable:true" ><col><col style="background-color:red" contenteditable="true" ></colgroup>';
+				let e = editable ? ' contenteditable="true" inputmode="decimal" \
+					onclick="document.execCommand(\'selectAll\',false,null)" \
+					oninput="tabeditInput(this)" onblur="tabeditSubmit(this)" ' : '';
+				let s = '<table>';
+				// Each table contains 36 rows plus 2 extra rows which are repeated row0 and row1
+				maxIndex = (table.data.length - 2) / 2;
+				for (let j = 0; j < maxIndex; j++) {
+					s += '<tr><td>' + (j * 10).toString() + '</td><td' + e + '>' + table.data[j].toFixed(1).toString() + '</td><td>'  
+						+ ((maxIndex + j) * 10).toString() + '</td><td' + e +'>' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
 				}
-			}
-			
-			function tabeditInput(e) {
-				if (e.childNodes.length > 0){
-					let s = e.childNodes[0].data;
-					if (s === undefined) 
-					{
-						console.log("undef!")
-						return;
-					}
-					s = s.replace(/~[0-9\.\-]/gm, '');
-					e.childNodes[0].data = s;
-					if (isNaN(s) || !((s == '') || s.match(/[0-9\.\-]$/))) {
-						e.childNodes[0].data = s.replace(/.$/, '');
-					}
-					let range = document.createRange();
-					let sel = window.getSelection();
-					range.setStart(e.childNodes[0], e.childNodes[0].length)
-					range.collapse(true)
-    
-					sel.removeAllRanges()
-					sel.addRange(range)
-				}
+				s += '</table>';
+				return s;
 			}
 			
 			function drawDevTables() {
@@ -836,8 +778,6 @@
 				if (devTables.length > 4) {
 					s += ' <button id="dev_remove" class="just_button">Удалить</button>';
 				}
-
-
 				
 				$("#set_dev_tables")[0].innerHTML = s;
 				
@@ -886,11 +826,6 @@
 				}
 			}
 			
-			
-			//function devTableAdd() {
-			//	
-			//}
-			
 			if (!window.mobileAndTabletCheck()) {
 				try {
 					cssRules = document.styleSheets[0].cssRules;
@@ -936,37 +871,47 @@
 			setupDevSelectors(1);
 			
 			function invalidateAnswers() {
-				for (let i of $(".block.valid")) {
-					i.classList.remove("valid");
-					i.classList.add("invalid");
+				for (let item of $(".block.valid")) {
+					item.classList.remove("valid");
+					item.classList.add("invalid");
 				}
 			}
 		
-			/*for (let item of $(".input_field")) {
-				if (item.id.match(/^dir/)) {
-					item.onchange = dir_UpdateAnswers;
+			function answersSetState(tabID, state) {
+				let blocks = $(tabID).find(".block.invalid")
+				for (let item of blocks) {
+					item.classList.remove("invalid");
+					item.classList.add(state);
 				}
-				if (item.id.match(/^inv1/)) {
-					item.onchange = inv1_UpdateAnswers;
+				blocks = $(tabID).find(".block.valid")
+				for (let item of blocks) {
+					item.classList.remove("valid");
+					item.classList.add(state);
 				}
-				if (item.id.match(/^inv2/)) {
-					item.onchange = inv2_UpdateAnswers;
-				}
-			}*/
-
-			for (let item of $(".input_field")) {
-				item.onchange = invalidateAnswers;
+			}
+		
+			for (let item of $("#DirectProblem").find(".input_field")) {
+				item.onchange = function() {
+						answersSetState("#DirectProblem", "invalid");
+					}
 			}
 
+			for (let item of $("#InverseProblem1").find(".input_field")) {
+				item.onchange = function() {
+						answersSetState("#InverseProblem1", "invalid");
+					}
+			}
+
+			for (let item of $("#InverseProblem2").find(".input_field")) {
+				item.onchange = function() {
+						answersSetState("#InverseProblem2", "invalid");
+					}
+			}
 
 			for (let item of $(".dev_table")) {
 				item.onchange = function() {
-						//console.log("Select %d", this.selectedIndex)
 						setupDevSelectors(this.selectedIndex);
 						invalidateAnswers();
-						//dir_UpdateAnswers();
-						//inv1_UpdateAnswers();
-						//inv2_UpdateAnswers();
 					}
 			}
 			
@@ -977,16 +922,19 @@
 
 			dir_CbWindChange();
 			dir_CbStreamChange();
+			dir_UpdateAnswers();
 			$("#dir_cb_wind")[0].onchange = dir_CbWindChange;
 			$("#dir_cb_stream")[0].onchange = dir_CbStreamChange;
 
 			inv1_CbWindChange();
 			inv1_CbStreamChange();
+			inv1_UpdateAnswers();
 			$("#inv1_cb_wind")[0].onchange = inv1_CbWindChange;
 			$("#inv1_cb_stream")[0].onchange = inv1_CbStreamChange;
 			
 			inv2_CbWindChange();
 			inv2_CbStreamChange();
+			inv2_UpdateAnswers();
 			$("#inv2_cb_wind")[0].onchange = inv2_CbWindChange;
 			$("#inv2_cb_stream")[0].onchange = inv2_CbStreamChange;
 			
