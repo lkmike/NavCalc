@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="jquery.maskedinput.min.js"></script>
+		<style>
+
+			html, body {
+				overscroll-behavior-y: contain;
+			}
+
+			body {
+				background-color: rgb(250, 250, 255);
+			}
+
+			.tab {
+				overflow: hidden;
+				border: 1px solid #ccc;
+				background-color: #fff;
+				background-color: rgb(250, 250, 255);
+			}
+
+			.tab button {
+				background-color: rgb(250, 250, 255);
+				float: left;
+				border: none;
+				outline: none;
+				cursor: pointer;
+				padding: 14px 16px;
+				font-family: sans-serif;
+				font-weight: bold;
+				font-size: 200%;
+			}
+
+			.tab button.active {
+				background-color: #ccd;
+			}
+
+			.tabcontent {
+				background-color: rgb(250, 250, 255);
+				display: none;
+				/*padding: 6px 12px;*/
+				border: 1px solid #ccc;
+				border-top: none;
+				font-size: 250%;
+			} 
+			
+			.block {
+				background-color: rgb(250, 250, 255);
+				height: 70px;
+				padding: 20px;
+				position: relative;
+				border-width: 1px;
+				border-color: #dddddd;
+				border-style: dashed;
+				font-family: sans-serif;
+			}
+
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+			  -webkit-appearance: none;
+			  margin: 0;
+			}
+
+			/* Firefox */
+			input[type=number] {
+			  -moz-appearance: textfield;
+			}
+
+			.input_field {
+				display: inline-block;
+				text-align: center;
+				min-width: 60px;
+				width: 25%;
+				margin-right: 20px;
+				margin-left: 20px;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+				position: relative;
+				font-size: 100%;
+			}
+
+			.quantity {
+				display: inline-block;
+				width: 55%;
+				text-align: right;
+				padding-right: 20px;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+			}
+
+			.a_quantity {
+				display: inline-block;
+				width: 55%;
+				text-align: right;
+				padding-right: 20px;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+			}
+
+			.answer {
+				display: inline-block;
+				width: 10%;
+				text-align: left;
+				padding-left: 30px;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+			}
+
+			.unit {
+				display: inline-block;
+				width: 5%;
+				text-align: left;
+				padding-right: 20px;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+			}
+			
+			.cb_label {
+				display: inline-block;
+				width: 22%;
+				text-align: left;
+				padding-left: 20px;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				float: left;
+			}
+
+			.switch {
+				position: relative;
+				display: inline-block;
+				width: 10%;
+				height: 80%;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+
+			/* Hide default HTML checkbox */
+			.switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			/* The slider */
+			.slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+			}
+
+			.slider:before {
+				position: absolute;
+				content: "";
+				height: 80%;
+				width: 48%;
+				left: 4px;
+				top: 50%;
+				transform: translateY(-50%);
+				background-color: white;
+			}
+
+			input:checked + .slider {
+				/*background-color: #2196F3;*/
+				background-color: #666;
+			}
+
+			input:focus + .slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .slider:before {
+				-webkit-transform: translate(80%, -50%);
+				-ms-transform: translateX(80%, -50%);
+				transform: translateX(80%, -50%);
+			}
+			
+			table {
+				font-family: arial, sans-serif;
+				border-collapse: collapse;
+				width: 100%;
+			}
+
+			td {
+				/*border: 1px solid #dddddd;*/
+				/*border: 0px;*/
+				text-align: right;
+				padding: 8px;
+				padding-right: 30px;
+			}
+			
+			tr:nth-child(odd) {
+				background-color: #dddddd;
+			}
+			
+			h1 {
+				font-family: sans-serif;
+				font-weight: bold;
+				font-size: 150%;
+			}
+
+			h2 {
+				font-family: sans-serif;
+				font-weight: bold;
+				font-size: 100%;
+			}
+
+
+		
+		</style>
+	</head>
+
+	<body>
+		 <!-- Tab links -->
+		<div class="tab">
+			<button class="tablinks" onclick="openTab(event, 'DirectProblem')" id="defaultOpen">Прямая задача</button>
+			<button class="tablinks" onclick="openTab(event, 'InverseProblem1')">Обратная задача 1</button>
+			<button class="tablinks" onclick="openTab(event, 'InverseProblem2')">Обратная задача 2</button>
+			<button class="tablinks" onclick="openTab(event, 'Settings')">≡</button>
+		</div>
+
+		<!-- Tab content -->
+		<div id="DirectProblem" class="tabcontent">
+			<div class="block">
+				<span class="quantity">Данные о девиации</span>
+				<select size="1" id="dir_devtable" class="input_field" onchange="dir_UpdateAnswers()">
+					<option value="tab1">Табл. №1</option>
+					<option value="tab2">Табл. №2</option>
+					<option value="tab2.1">Табл. №2.1</option>
+					<option value="tabnone">Нет</option>
+				</select>
+			</div>
+			<div class="block">
+				<span class="quantity">Магнитное склонение</span>
+				<input id="dir_declination" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="-180" max="180" step=".1" value="16.7" />
+			</div>
+			<div class="block">
+				<span class="quantity">Широта исходной точки</span>
+				<input id="dir_lat" class="input_field degmin" onchange="dir_UpdateAnswers()" type="text" value="69°10.95′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Долгота исходной точки</span>
+				<input id="dir_long" class="input_field degmin" onchange="dir_UpdateAnswers()" type="text" value="36°07.00′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Компасный курс</span>
+				<input id="dir_compass_course" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="25" />
+			</div>
+			<div class="block">
+				<span class="quantity">Скорость хода</span>
+				<input id="dir_velocity" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="8.0" />
+				<span class="unit">уз</span>
+			</div>
+			<div class="block">
+				<span class="quantity">РОЛ</span>
+				<input id="dir_log_increment" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".01" value="5.8" />
+				<span class="unit">M</span>
+			</div>
+			<div class="block">
+				<span class="cb_label">Ветер</span>
+				<label class="switch">
+					<input type="checkbox" id="dir_cb_wind" onchange="dir_CbWindChange()">
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div class="block" id="dir_wind">
+				<span class="quantity">Направление</span>
+				<input id="dir_wind_direction" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="315" />
+			</div>
+			<div class="block">
+				<span class="cb_label">Течение</span>
+				<label class="switch">
+					<input type="checkbox" id="dir_cb_stream" onchange="dir_CbStreamChange()">
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div class="block" id="dir_stream_dir">
+				<span class="quantity">Скорость</span>
+				<input id="dir_stream_velocity" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="3" />
+				<span class="unit">уз</span>
+			</div>
+			<div class="block" id="dir_stream_vel">
+				<span class="quantity">Направление</span>
+				<input id="dir_stream_direction" class="input_field" onchange="dir_UpdateAnswers()" type="number" min="0" max="359.99" step=".1" value="112">
+			</div>
+			<hr>
+			<!-- ----------------------------------------------------------------------------------------- -->
+			<div class="block">
+				<span class="a_quantity">Широта конечной точки</span><span id="dir_new_lat" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Долгота конечной точки</span><span id="dir_new_long" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Девиация</span><span id="dir_deviation" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Магнитный курс</span><span id="dir_magnetic_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Истинный курс</span><span id="dir_true_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">&alpha;</span><span id="dir_alpha" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">ПУ<sub>&alpha;</sub></span><span id="dir_PUa" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">&beta;</span><span id="dir_beta" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">ПУ<sub>&alpha;&beta;</sub></span><span id="dir_PUab" class="answer"></span>
+			</div>
+		</div>
+
+		<div id="InverseProblem1" class="tabcontent">
+			<div class="block">
+				<span class="quantity">Данные о девиации</span>
+				<select size="1" id="inv1_devtable" class="input_field" onchange="inv1_UpdateAnswers()">
+					<option value="tab1">Табл. №1</option>
+					<option value="tab2">Табл. №2</option>
+					<option value="tab2.1">Табл. №2.1</option>
+					<option value="tabnone">Нет</option>
+				</select>
+			</div>
+			<div class="block">
+				<span class="quantity">Магнитное склонение</span>
+				<input id="inv1_declination" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="-180" max="180" step=".01" value="16.7" />
+			</div>
+			<div class="block">
+				<span class="quantity">Широта исходной точки</span>
+				<input id="inv1_lat" class="input_field degmin" onchange="inv1_UpdateAnswers()" type="text" value="69°10.95′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Долгота исходной точки</span>
+				<input id="inv1_long" class="input_field degmin" onchange="inv1_UpdateAnswers()" type="text" value="36°07.00′" />
+			</div>
+			<div class="block">
+				<span class="a_quantity">ПУ<sub>&alpha;&beta;</sub></span>
+				<input id="inv1_PUab" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="64.7" />
+			</div>
+			<div class="block">
+				<span class="quantity">Скорость хода</span>
+				<input id="inv1_velocity" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="8.0" />
+				<span class="unit">уз</span>
+			</div>
+			<div class="block">
+				<span class="quantity">РОЛ</span>
+				<input id="inv1_log_increment" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".01" value="5.8" />
+				<span class="unit">M</span>
+			</div>
+			<div class="block">
+				<span class="cb_label">Ветер</span>
+				<label class="switch">
+					<input type="checkbox" id="inv1_cb_wind" onchange="inv1_CbWindChange()">
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div class="block" id="inv1_wind">
+				<span class="quantity">Направление</span>
+				<input id="inv1_wind_direction" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="315" />
+			</div>
+			<div class="block">
+				<span class="cb_label">Течение</span>
+				<label class="switch">
+					<input type="checkbox" id="inv1_cb_stream" onchange="inv1_CbStreamChange()">
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div class="block" id="inv1_stream_dir">
+				<span class="quantity">Скорость</span>
+				<input id="inv1_stream_velocity" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="3" />
+				<span class="unit">уз</span>
+			</div>
+			<div class="block" id="inv1_stream_vel">
+				<span class="quantity">Направление</span>
+				<input id="inv1_stream_direction" class="input_field" onchange="inv1_UpdateAnswers()" type="number" min="0" max="359.99" step=".1" value="112">
+			</div>
+			<hr>
+			<!-- ----------------------------------------------------------------------------------------- -->
+			<div class="block">
+				<span class="a_quantity">Широта конечной точки</span><span id="inv1_new_lat" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Долгота конечной точки</span><span id="inv1_new_long" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Компасный курс</span><span id="inv1_compass_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Девиация</span><span id="inv1_deviation" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Магнитный курс</span><span id="inv1_magnetic_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Истинный курс</span><span id="inv1_true_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">&alpha;</span><span id="inv1_alpha" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">ПУ<sub>&alpha;</sub></span><span id="inv1_PUa" class="answer" />
+			</div>
+			<div class="block">
+				<span class="a_quantity">&beta;</span><span id="inv1_beta" class="answer"></span>
+			</div>
+		</div>
+
+		<div id="InverseProblem2" class="tabcontent">
+			<div class="block">
+				<span class="quantity">Данные о девиации</span>
+				<select size="1" id="inv2_devtable" class="input_field" onchange="inv2_UpdateAnswers()">
+					<option value="tab1">Табл. №1</option>
+					<option value="tab2">Табл. №2</option>
+					<option value="tab2.1">Табл. №2.1</option>
+					<option value="tabnone">Нет</option>
+				</select>
+			</div>
+			<div class="block">
+				<span class="quantity">Магнитное склонение</span>
+				<input id="inv2_declination" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="-180" max="180" step=".01" value="16.7" />
+			</div>
+			<div class="block">
+				<span class="quantity">Широта исходной точки</span>
+				<input id="inv2_lat" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="69°10.95′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Долгота исходной точки</span>
+				<input id="inv2_long" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="36°07.00′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Широта конечной точки</span>
+				<input id="inv2_new_lat" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="69°13.96′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Долгота конечной точки</span>
+				<input id="inv2_new_long" class="input_field degmin" onchange="inv2_UpdateAnswers()" type="text" value="36°24.96′" />
+			</div>
+			<div class="block">
+				<span class="quantity">Скорость хода</span>
+				<input id="inv2_velocity" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="8.0" />
+				<span class="unit">уз</span>
+			</div>
+			<div class="block">
+				<span class="cb_label">Ветер</span>
+				<label class="switch">
+					<input type="checkbox" id="inv2_cb_wind" onchange="inv2_CbWindChange()">
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div class="block" id="inv2_wind">
+				<span class="quantity">Направление</span>
+				<input id="inv2_wind_direction" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="359.99" step=".01" value="315" />
+			</div>
+			<div class="block">
+				<span class="cb_label">Течение</span>
+				<label class="switch">
+					<input type="checkbox" id="inv2_cb_stream" onchange="inv2_CbStreamChange()">
+					<span class="slider"></span>
+				</label>
+			</div>
+			<div class="block" id="inv2_stream_dir">
+				<span class="quantity">Скорость</span>
+				<input id="inv2_stream_velocity" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="100" step=".1" value="3" />
+				<span class="unit">уз</span>
+			</div>
+			<div class="block" id="inv2_stream_vel">
+				<span class="quantity">Направление</span>
+				<input id="inv2_stream_direction" class="input_field" onchange="inv2_UpdateAnswers()" type="number" min="0" max="359.99" step=".1" value="112">
+			</div>
+			<hr>
+			<!-- ----------------------------------------------------------------------------------------- -->
+			<div class="block">
+				<span class="a_quantity">Компасный курс</span><span id="inv2_compass_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Девиация</span><span id="inv2_deviation" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Магнитный курс</span><span id="inv2_magnetic_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">Истинный курс</span><span id="inv2_true_course" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">&alpha;</span><span id="inv2_alpha" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">ПУ<sub>&alpha;</sub></span><span id="inv2_PUa" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">&beta;</span><span id="inv2_beta" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">ПУ<sub>&alpha;&beta;</sub></span><span id="inv2_PUab" class="answer"></span>
+			</div>
+			<div class="block">
+				<span class="a_quantity">РОЛ</span><span id="inv2_log_increment" class="answer"></span>
+			</div>
+		</div> 
+
+		<div id="Settings" class="tabcontent">
+			<h1>Таблицы девиации</h1>
+			<div id="dev_tables">
+			</div>
+		</div>
+
+
+		<script>
+			"use strict"
+			
+			const devTables = [[
+				-2.50, -0.50, 1.6, 4.4, 7.6, 11.1, 14, 16.5, 18.7, 20.1, 20.8, 19.4,
+				16.7, 13.4, 9.8, 6.9, 4.6, 2.5, 1.1, 0.9, -1.20, -3.30, -6.50, -10.30, -13.20, -15.70,
+				-17.90, -19.20, -18.10, -16.20, -13.90, -10.60, -8.30, -6.20, -4.40, -2.90, -2.50,
+				-0.50
+			], 
+			[
+				-2.5, -2.2, -2.1, -2.2, -2.4, -2.8, -3.4, -4.1, -4.7, -5.3, -5.6, -5.7, -5.4, -4.7, 
+				-3.6, -2.3, -0.7, 0.9, 2.6, 4.0, 5.2, 6.0, 6.4, 6.3, 5.7, 4.8, 3.7, 2.4, 1.0, -0.2, -1.2,
+				-2.0, -2.6, -2.8, -2.8, -2.7, -2.5, -2.2
+			],
+			[
+				3.2, 2.4, 1.8, 1.4, 0.7, 0.0, -1, -2.1, -2.8, -3.8, -4.6, -5.2, -5.6, -6.0, 
+				-5.7, -5.2, -4.6, -3.5, -2.4, -1.0, 0.4, 1.8, 2.8, 3.8, 4.9, 5.6, 6.0, 6.3, 
+				6.4, 6.0, 5.6, 5.2, 4.6, 4.2, 3.8, 3.5, 3.2, 3.4
+			],
+			[
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+				0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+			]];
+			
+			
+			function dir_UpdateAnswers() {
+				let declination = parseFloat($("#dir_declination")[0].value);
+				let latText = $("#dir_lat")[0].value;
+				let longText = $("#dir_long")[0].value;
+				
+				let re = /([0-9]{2})°([0-5][0-9].[0-9]{2})′/;
+				let latitude = latText.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+				let longitude = longText.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+
+				let compassCourse = parseFloat($("#dir_compass_course")[0].value);
+				let velocity = parseFloat($("#dir_velocity")[0].value);
+				let logIncrement = parseFloat($("#dir_log_increment")[0].value);
+				let windDirection = parseFloat($("#dir_wind_direction")[0].value);
+				let streamDirection = parseFloat($("#dir_stream_direction")[0].value);
+				let streamVelocity = parseFloat($("#dir_stream_velocity")[0].value);
+				
+				let [newLat, newLong, deviation, magneticCourse, trueCourse, alpha, pua, beta, puab] = 
+					directProblem(declination, latitude, longitude, compassCourse, velocity, logIncrement,
+						windDirection, streamVelocity, streamDirection, $("#dir_cb_wind")[0].checked, $("#dir_cb_stream")[0].checked, 
+						devTables[$("#dir_devtable")[0].selectedIndex]);
+			
+				$("#dir_new_lat")[0].innerHTML = newLat.toDMText();
+				$("#dir_new_long")[0].innerHTML = newLong.toDMText();
+				$("#dir_deviation")[0].innerHTML = deviation.toFixed(1).toString();
+				$("#dir_magnetic_course")[0].innerHTML = magneticCourse.toFixed(1).toString();
+				$("#dir_true_course")[0].innerHTML = trueCourse.toFixed(1).toString();
+				$("#dir_alpha")[0].innerHTML = alpha.toFixed(1).toString();
+				$("#dir_PUa")[0].innerHTML = pua.toFixed(1).toString();
+				$("#dir_beta")[0].innerHTML = beta.toFixed(1).toString();
+				$("#dir_PUab")[0].innerHTML = puab.toFixed(1).toString();
+			}
+
+			function dir_CbWindChange (){
+				$("#dir_wind").children().prop('disabled', !$("#dir_cb_wind")[0].checked);
+				dir_UpdateAnswers()
+			}
+
+			function dir_CbStreamChange (){
+				$("#dir_stream_dir").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
+				$("#dir_stream_vel").children().prop('disabled', !$("#dir_cb_stream")[0].checked);
+				dir_UpdateAnswers();
+			}
+
+			function inv1_UpdateAnswers() {
+				let declination = parseFloat($("#inv1_declination")[0].value);
+				let latText = $("#inv1_lat")[0].value;
+				let longText = $("#inv1_long")[0].value;
+				
+				let re = /([0-9]{2})°([0-5][0-9].[0-9]{2})′/;
+				let latitude = latText.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+				let longitude = longText.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+
+				let PUab = parseFloat($("#inv1_PUab")[0].value);
+				let velocity = parseFloat($("#inv1_velocity")[0].value);
+				let logIncrement = parseFloat($("#inv1_log_increment")[0].value);
+				let windDirection = parseFloat($("#inv1_wind_direction")[0].value);
+				let streamDirection = parseFloat($("#inv1_stream_direction")[0].value);
+				let streamVelocity = parseFloat($("#inv1_stream_velocity")[0].value);
+				
+				let [newLat, newLong, compassCourse, deviation, magneticCourse, trueCourse, alpha, pua, beta] = 
+					inverseProblem1(declination, latitude, longitude, PUab, velocity, logIncrement,
+						windDirection, streamVelocity, streamDirection, $("#inv1_cb_wind")[0].checked, $("#inv1_cb_stream")[0].checked,
+						devTables[$("#inv1_devtable")[0].selectedIndex]);
+
+				$("#inv1_new_lat")[0].innerHTML = newLat.toDMText();
+				$("#inv1_new_long")[0].innerHTML = newLong.toDMText();
+				$("#inv1_compass_course")[0].innerHTML = compassCourse.toFixed(1).toString();
+				$("#inv1_deviation")[0].innerHTML = deviation.toFixed(1).toString();
+				$("#inv1_magnetic_course")[0].innerHTML = magneticCourse.toFixed(1).toString();
+				$("#inv1_true_course")[0].innerHTML = trueCourse.toFixed(1).toString();
+				$("#inv1_alpha")[0].innerHTML = alpha.toFixed(1).toString();
+				$("#inv1_PUa")[0].innerHTML = pua.toFixed(1).toString();
+				$("#inv1_beta")[0].innerHTML = beta.toFixed(1).toString();
+			}
+
+			function inv1_CbWindChange (){
+				$("#inv1_wind").children().prop('disabled', !$("#inv1_cb_wind")[0].checked);
+				inv1_UpdateAnswers()
+			}
+
+			function inv1_CbStreamChange (){
+				$("#inv1_stream_dir").children().prop('disabled', !$("#inv1_cb_stream")[0].checked);
+				$("#inv1_stream_vel").children().prop('disabled', !$("#inv1_cb_stream")[0].checked);
+				inv1_UpdateAnswers();
+			}
+
+			function inv2_UpdateAnswers() {
+				let declination = parseFloat($("#inv2_declination")[0].value);
+				
+				let re = /([0-9]{2})°([0-5][0-9].[0-9]{2})′/;
+				let latitude = $("#inv2_lat")[0].value.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+				let longitude = $("#inv2_long")[0].value.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+				
+				let newLat = $("#inv2_new_lat")[0].value.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+				let newLong = $("#inv2_new_long")[0].value.match(re).slice(1,3).map(x => parseFloat(x)).toDegrees();
+
+				let PUab = parseFloat($("#inv2_PUab")[0].value);
+				let velocity = parseFloat($("#inv2_velocity")[0].value);
+				let windDirection = parseFloat($("#inv2_wind_direction")[0].value);
+				let streamDirection = parseFloat($("#inv2_stream_direction")[0].value);
+				let streamVelocity = parseFloat($("#inv2_stream_velocity")[0].value);
+				
+				let [compassCourse, deviation, magneticCourse, trueCourse, alpha, pua, beta, puab, logIncrement] = 
+					inverseProblem2(declination, latitude, longitude, newLat, newLong, velocity, 
+						windDirection, streamVelocity, streamDirection, $("#inv2_cb_wind")[0].checked, $("#inv2_cb_stream")[0].checked,
+						devTables[$("#inv2_devtable")[0].selectedIndex]);
+
+				$("#inv2_compass_course")[0].innerHTML = compassCourse.toFixed(1).toString();
+				$("#inv2_deviation")[0].innerHTML = deviation.toFixed(1).toString();
+				$("#inv2_magnetic_course")[0].innerHTML = magneticCourse.toFixed(1).toString();
+				$("#inv2_true_course")[0].innerHTML = trueCourse.toFixed(1).toString();
+				$("#inv2_alpha")[0].innerHTML = alpha.toFixed(1).toString();
+				$("#inv2_PUa")[0].innerHTML = pua.toFixed(1).toString();
+				$("#inv2_beta")[0].innerHTML = beta.toFixed(1).toString();
+				$("#inv2_PUab")[0].innerHTML = puab.toFixed(1).toString();
+				$("#inv2_log_increment")[0].innerHTML = logIncrement.toFixed(1).toString();
+			}
+
+			function inv2_CbWindChange (){
+				$("#inv2_wind").children().prop('disabled', !$("#inv2_cb_wind")[0].checked);
+				inv2_UpdateAnswers()
+			}
+
+			function inv2_CbStreamChange (){
+				$("#inv2_stream_dir").children().prop('disabled', !$("#inv2_cb_stream")[0].checked);
+				$("#inv2_stream_vel").children().prop('disabled', !$("#inv2_cb_stream")[0].checked);
+				inv2_UpdateAnswers();
+			}
+			
+		</script>
+
+		<script>
+			"use strict"
+
+			Number.prototype.mod = function (n) {
+				return ((this % n) + n) % n;
+			};
+
+			Number.prototype.magneticCourseAndDeviation = function (devTable) {
+				let cc = this.mod(360.0);
+				for (var i = 0; i < 37; i++) {
+				if ((cc >= i * 10) && (cc < (i + 1) * 10))
+				  break
+				}
+				let cc1 = i * 10;
+				let cc2 = (i + 1) * 10;
+				let d1 = devTable[i];
+				let d2 = devTable[i + 1];
+				let deviation = d1 + (d2 - d1) * (cc - cc1) / (cc2 - cc1);
+				return [(cc + deviation).mod(360.0), deviation];
+			}
+
+			Number.prototype.compassCourseAndDeviation = function (devTable) {
+				let mc = this.mod(360.0);
+				for (var i = 0; i < 37; i++) {
+				if ((mc >= i * 10 + devTable[i]) && (mc < (i + 1) * 10 + devTable[i + 1])) {
+				  break;
+				}
+				}
+				let cc1 = i * 10;
+				let cc2 = (i + 1) * 10;
+				let mc1 = cc1 + devTable[i];
+				let mc2 = cc2 + devTable[i + 1];
+				let compassCourse = (cc1 + (cc2 - cc1) * (mc - mc1) / (mc2 - mc1)).mod(360.0);
+				let deviation = compassCourse.magneticCourseAndDeviation(devTable)[1];
+				return [compassCourse, deviation];
+			}
+
+			function degrees2DM(degrees) {
+				let degs = new Number(degrees).mod(360.0);
+				return [Math.floor(degs), 60 * (degs - Math.floor(degs))];
+			}
+
+			function dm2Degrees(degrees, minutes) {
+				return new Number(degrees + minutes / 60.0).mod(360.0);
+			}
+
+			Number.prototype.toDM = function () {
+				return [Math.floor(this).toFixed(0), (60 * (this - Math.floor(this))).toFixed(2)]
+			}
+			
+			Number.prototype.toDMText = function () {
+				let deg = Math.floor(this).toFixed(0).toString()+ "°";
+				let min = (60 * (this - Math.floor(this))).toFixed(2).toString() + "′";
+				if (min.length == 5) {
+					min = "0" + min;
+				}
+				return deg + min;
+			}
+			
+			Array.prototype.toDegrees = function () {
+				return this[0] + this[1] / 60.0;
+			}
+
+			function alpha(trueCourse, windDirection) {
+				let difference = (windDirection - trueCourse).mod(360);
+				if ((0 <= difference) && (difference < 80)) {
+					return -8;
+				} else if ((80 <= difference) && (difference < 100)) {
+					return -4;
+				} else if ((100 <= difference) && (difference < 170)) {
+					return -2;
+				} else if ((170 <= difference) && (difference < 190)) {
+					return 0;
+				} else if ((190 <= difference) && (difference < 260)) {
+					return 2;
+				} else if ((260 <= difference) && (difference < 280)) {
+					return 4;
+				} else { // if ((280<=difference) && (difference < 360))
+					return 8;
+				}
+			}
+
+			Number.prototype.toRadians = function () {
+				return this * Math.PI / 180.0;
+			}
+
+			Number.prototype.toDegrees = function () {
+				return this * 180.0 / Math.PI;
+			}
+
+			Array.prototype.vectorAdd = function (other) {
+				var result = [];
+				for (var i = 0; i < this.length; i++) {
+					result.push(this[i] + other[i]);
+				}
+				return result;
+			}
+
+			Array.prototype.vectorSub = function (other) {
+				var result = [];
+				for (var i = 0; i < this.length; i++) {
+					result.push(this[i] - other[i]);
+				}
+				return result;
+			}
+
+			Array.prototype.numberMul = function (a) {
+				var result = [];
+				for (var i = 0; i < this.length; i++) {
+					result.push(this[i] * a);
+				}
+				return result;
+			}
+
+			Array.prototype.scalarMul = function (other) {
+				var result = 0;
+				for (var i = 0; i < this.length; i++) {
+					result += this[i] * other[i];
+				}
+				return result;
+			}
+
+			Array.prototype.norm = function () {
+				return Math.sqrt(this.scalarMul(this));
+			}
+
+			Array.prototype.unitVec = function () {
+				return this.numberMul(1 / this.norm());
+			}
+
+			Array.prototype.vector2Mul = function (other) {
+				return this[0] * other[1] - this[1] * other[0];
+			}
+
+			Array.prototype.angle = function (other) {
+				// Prevent acos from arguments which are greater than 1 due to rounding errors
+				let angle = Math.acos((this.scalarMul(other) / this.norm() / other.norm()).toFixed(12));
+				if (this.vector2Mul(other) < 0) {
+					angle = -angle;
+				}
+				return angle;
+			}
+
+			function directProblem(declination, lat, long, compassCourse, boatVelocity, logIncrement,
+					windDirection, streamVelocity, streamDirection, useWind, useStream, devTable) {
+				let [magneticCourse, deviation] = compassCourse.magneticCourseAndDeviation(devTable);
+				let trueCourse = magneticCourse + declination;
+				let alph = useWind ? alpha(trueCourse, windDirection) : 0;
+				let cts = trueCourse + alph;
+				let wayOverWater = [Math.cos(cts.toRadians()), Math.sin(cts.toRadians())]
+					.numberMul(logIncrement);
+				let stream = useStream? [Math.cos(streamDirection.toRadians()), Math.sin(streamDirection.toRadians())]
+					.numberMul(logIncrement * streamVelocity / boatVelocity) : [0, 0];
+				let wayOverGround = wayOverWater.vectorAdd(stream);
+				let newLat = lat + wayOverGround[0] / 60;
+				let newLong = long + wayOverGround[1] / 60 / Math.cos(((lat + newLat) / 2).toRadians());
+				let beta = useStream? wayOverWater.angle(wayOverGround).toDegrees() : 0;
+				let cog = cts + beta;
+
+				return [newLat, newLong, deviation, magneticCourse.mod(360.0), trueCourse.mod(360.0), alph, cts.mod(360.0), beta, cog.mod(360.0)];
+			}
+
+			function inverseProblem1(declination, lat, long, cog, boatVelocity, logIncrement,
+					windDirection, streamVelocity, streamDirection, useWind, useStream, devTable) {
+				let unitVecOverGround = [Math.cos(cog.toRadians()), Math.sin(cog.toRadians())];
+				let unitStream = [Math.cos(streamDirection.toRadians()), Math.sin(streamDirection.toRadians())];
+				
+				if (!useStream) {
+					streamVelocity = 0;
+				}
+				let stream = unitStream.numberMul(streamVelocity);
+				let psi = unitStream.angle(unitVecOverGround);
+				let [wcospsi, wsinpsi] = [Math.cos(psi), Math.sin(psi)].numberMul(streamVelocity);
+				let velocityOverGround = wcospsi + Math.sqrt(boatVelocity * boatVelocity - wsinpsi * wsinpsi);
+
+				let lineOverGround = unitVecOverGround.numberMul(velocityOverGround);
+				let lineOverWater = lineOverGround.vectorSub(stream);
+				let wayOverWater = lineOverWater.numberMul(logIncrement / lineOverWater.norm());
+				let wayOverGround = wayOverWater.vectorAdd(stream.numberMul(logIncrement / lineOverWater.norm()));
+				let newLat = lat + wayOverGround[0] / 60;
+				let newLong = long + wayOverGround[1] / 60 / Math.cos(((lat + newLat) / 2).toRadians());
+				let beta = lineOverWater.angle(lineOverGround).toDegrees();
+				let cts = cog - beta;
+
+				//// Not exactly!
+				let alph = useWind ? alpha(cts, windDirection) : 0;
+
+				let trueCourse = cts - alph;
+				let magneticCourse = trueCourse - declination;
+				let [compassCourse, deviation] = magneticCourse.compassCourseAndDeviation(devTable);
+
+				return [newLat, newLong, compassCourse.mod(360.0), deviation, magneticCourse.mod(360.0), trueCourse.mod(360.0), alph, cts, beta];
+			}
+			
+			function inverseProblem2(declination, lat, long, newLat, newLong, boatVelocity, 
+					windDirection, streamVelocity, streamDirection, useWind, useStream, devTable) {
+				let wayOverGround = [newLat - lat, (newLong - long) * Math.cos(((lat + newLat) / 2).toRadians())].numberMul(60.0);
+				let unitVecOverGround = wayOverGround.numberMul(1 / wayOverGround.norm());
+				let cog = [1, 0].angle(unitVecOverGround).toDegrees();
+				let unitStream = [Math.cos(streamDirection.toRadians()), Math.sin(streamDirection.toRadians())];
+				
+				if (!useStream) {
+					streamVelocity = 0;
+				}
+
+				let stream = unitStream.numberMul(streamVelocity);
+				let psi = unitStream.angle(unitVecOverGround);
+				let [wcospsi, wsinpsi] = [Math.cos(psi), Math.sin(psi)].numberMul(streamVelocity);
+				let velocityOverGround = wcospsi + Math.sqrt(Math.abs(boatVelocity * boatVelocity - wsinpsi * wsinpsi));
+
+				let logIncrement = wayOverGround.norm() * boatVelocity / velocityOverGround;
+				let lineOverGround = unitVecOverGround.numberMul(velocityOverGround);
+				let lineOverWater = lineOverGround.vectorSub(stream);
+				let wayOverWater = lineOverWater.numberMul(logIncrement / lineOverWater.norm());
+				let beta = lineOverWater.angle(lineOverGround).toDegrees();
+				let cts = cog - beta;
+
+				//// Not exactly!
+				let alph = useWind ? alpha(cts, windDirection) : 0;
+
+				let trueCourse = cts - alph;
+				let magneticCourse = trueCourse - declination;
+				let [compassCourse, deviation] = magneticCourse.compassCourseAndDeviation(devTable);
+
+				return [compassCourse.mod(360.0), deviation, magneticCourse.mod(360.0), trueCourse.mod(360.0), alph, cts.mod(360.0), beta, cog.mod(360.0), logIncrement];
+			}
+
+		</script>
+		
+		<script>
+			function openTab(evt, problemName) {
+				// Declare all variables
+				var i, tabcontent, tablinks;
+
+				// Get all elements with class="tabcontent" and hide them
+				tabcontent = document.getElementsByClassName("tabcontent");
+				for (i = 0; i < tabcontent.length; i++) {
+					tabcontent[i].style.display = "none";
+				}
+
+				// Get all elements with class="tablinks" and remove the class "active"
+				tablinks = document.getElementsByClassName("tablinks");
+				for (i = 0; i < tablinks.length; i++) {
+					tablinks[i].className = tablinks[i].className.replace(" active", "");
+				}
+
+				// Show the current tab, and add an "active" class to the button that opened the tab
+				document.getElementById(problemName).style.display = "block";
+				evt.currentTarget.className += " active";
+			}
+			
+			function drawDevTables() {
+				let s = "";
+				for (let i = 0; i < $("#dir_devtable")[0].length - 1; i++) {
+					s += "<h2>" + $("#dir_devtable")[0].childNodes[2 * i + 1].text + "</h2>";
+					s += '<table>';
+					for (let j = 0; j < (devTables[i].length - 2) / 2; j++) {
+						s += '<tr><td>' + (j * 10).toString() + '</td><td>' + devTables[i][j].toFixed(1).toString() + '</td><td>'  
+							+ ((devTables[i].length / 2 - 1 + j) * 10).toString() + '</td><td>' + devTables[i][devTables[i].length / 2 - 1 + j].toFixed(1).toString() + '</td></tr>';
+					}
+					s += '</table><hr color="#ccc">';
+				}
+				$("#dev_tables")[0].innerHTML = s;
+			}
+
+			$(function(){
+				$(document).on('click','input[type=text]',function(){ this.select(); });
+			});
+
+			$(function(){
+				$(document).on('click','input[type=number]',function(){ this.select(); });
+			});
+			
+			$(function() {
+				$.mask.definitions['m'] = '[0-5]';
+				$(".degmin").mask("99°m9.99′");
+			});
+						
+			window.mobileAndTabletCheck = function() {
+				let check = false;
+				(function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+				return check;
+			};
+			
+			CSSRuleList.prototype.setCSSProperty = function  (selector, name, value, priority = "") {
+				for (let i = 0; i < cssRules.length; i++) {
+					if (selector === cssRules[i].selectorText) {
+						cssRules[i].style.setProperty(name, value, priority);
+						break;
+					}
+				}
+			}
+			
+			if (!window.mobileAndTabletCheck()) {
+				cssRules = document.styleSheets[0].cssRules;
+				//cssRules.setCSSProperty("table", "width", "50%");
+				cssRules.setCSSProperty(".tab", "width", "50%");
+				cssRules.setCSSProperty(".tabcontent", "width", "50%");
+				cssRules.setCSSProperty(".tabcontent", "font-size", "100%");
+				cssRules.setCSSProperty(".tab button", "font-size", "100%");
+				cssRules.setCSSProperty(".block", "height", "30px");
+				cssRules.setCSSProperty(".block", "padding", "5px");
+				cssRules.setCSSProperty(".quantity", "width", "50%");
+				cssRules.setCSSProperty(".a_quantity", "width", "50%");
+				cssRules.setCSSProperty(".cb_label", "width", "15%");
+				cssRules.setCSSProperty(".cb", "top", "20%");
+				cssRules.setCSSProperty(".cb", "zoom", "1.5");
+				cssRules.setCSSProperty(".cb", "transform", "scale(1.5)");
+				cssRules.setCSSProperty(".cb", "-ms-transform", "scale(1.5)");
+				cssRules.setCSSProperty(".cb", "-webkit-transform", "scale(1.5)");
+				cssRules.setCSSProperty(".cb", "-o-transform",  "scale(1.5)");
+				cssRules.setCSSProperty(".cb", "-moz-transform:","scale(1.5)");
+			}			
+			
+			document.getElementById("defaultOpen").click();
+
+			dir_CbWindChange();
+			dir_CbStreamChange();
+			dir_UpdateAnswers();
+
+			inv1_CbWindChange();
+			inv1_CbStreamChange();
+			inv1_UpdateAnswers();
+			
+			inv2_CbWindChange();
+			inv2_CbStreamChange();
+			inv2_UpdateAnswers();
+			
+			drawDevTables();
+			
+		</script>
+	</body>
+</html>
