@@ -4,225 +4,7 @@
 		<meta charset="UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="jquery.maskedinput.min.js"></script>
-		<style>
-
-			html, body {
-				overscroll-behavior-y: contain;
-			}
-
-			body {
-				background-color: rgb(250, 250, 255);
-			}
-
-			.tab {
-				overflow: hidden;
-				border: 1px solid #ccc;
-				background-color: #fff;
-				background-color: rgb(250, 250, 255);
-			}
-
-			.tab button {
-				background-color: rgb(250, 250, 255);
-				float: left;
-				border: none;
-				outline: none;
-				cursor: pointer;
-				padding: 14px 16px;
-				font-family: sans-serif;
-				font-weight: bold;
-				font-size: 200%;
-			}
-
-			.tab button.active {
-				background-color: #ccd;
-			}
-
-			.tabcontent {
-				background-color: rgb(250, 250, 255);
-				display: none;
-				/*padding: 6px 12px;*/
-				border: 1px solid #ccc;
-				border-top: none;
-				font-size: 250%;
-			} 
-			
-			.block {
-				background-color: rgb(250, 250, 255);
-				height: 70px;
-				padding: 20px;
-				position: relative;
-				border-width: 1px;
-				border-color: #dddddd;
-				border-style: dashed;
-				font-family: sans-serif;
-			}
-
-			input::-webkit-outer-spin-button,
-			input::-webkit-inner-spin-button {
-			  -webkit-appearance: none;
-			  margin: 0;
-			}
-
-			/* Firefox */
-			input[type=number] {
-			  -moz-appearance: textfield;
-			}
-
-			.input_field {
-				display: inline-block;
-				text-align: center;
-				min-width: 60px;
-				width: 25%;
-				margin-right: 20px;
-				margin-left: 20px;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-				position: relative;
-				font-size: 100%;
-			}
-
-			.quantity {
-				display: inline-block;
-				width: 55%;
-				text-align: right;
-				padding-right: 20px;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-			}
-
-			.a_quantity {
-				display: inline-block;
-				width: 55%;
-				text-align: right;
-				padding-right: 20px;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-			}
-
-			.answer {
-				display: inline-block;
-				width: 10%;
-				text-align: left;
-				padding-left: 30px;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-			}
-
-			.unit {
-				display: inline-block;
-				width: 5%;
-				text-align: left;
-				padding-right: 20px;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-			}
-			
-			.cb_label {
-				display: inline-block;
-				width: 22%;
-				text-align: left;
-				padding-left: 20px;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				float: left;
-			}
-
-			.switch {
-				position: relative;
-				display: inline-block;
-				width: 10%;
-				height: 80%;
-				top: 50%;
-				transform: translateY(-50%);
-			}
-
-			/* Hide default HTML checkbox */
-			.switch input {
-				opacity: 0;
-				width: 0;
-				height: 0;
-			}
-
-			/* The slider */
-			.slider {
-				position: absolute;
-				cursor: pointer;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background-color: #ccc;
-			}
-
-			.slider:before {
-				position: absolute;
-				content: "";
-				height: 80%;
-				width: 48%;
-				left: 4px;
-				top: 50%;
-				transform: translateY(-50%);
-				background-color: white;
-			}
-
-			input:checked + .slider {
-				/*background-color: #2196F3;*/
-				background-color: #666;
-			}
-
-			input:focus + .slider {
-				box-shadow: 0 0 1px #2196F3;
-			}
-
-			input:checked + .slider:before {
-				-webkit-transform: translate(80%, -50%);
-				-ms-transform: translateX(80%, -50%);
-				transform: translateX(80%, -50%);
-			}
-			
-			table {
-				font-family: arial, sans-serif;
-				border-collapse: collapse;
-				width: 100%;
-			}
-
-			td {
-				/*border: 1px solid #dddddd;*/
-				/*border: 0px;*/
-				text-align: right;
-				padding: 8px;
-				padding-right: 30px;
-			}
-			
-			tr:nth-child(odd) {
-				background-color: #dddddd;
-			}
-			
-			h1 {
-				font-family: sans-serif;
-				font-weight: bold;
-				font-size: 150%;
-			}
-
-			h2 {
-				font-family: sans-serif;
-				font-weight: bold;
-				font-size: 100%;
-			}
-
-
-		
-		</style>
+		<link rel="stylesheet" href="navcalc.css">
 	</head>
 
 	<body>
@@ -508,10 +290,26 @@
 			<h1>Таблицы девиации</h1>
 			<div id="set_dev_tables">
 			</div>
+
+			<div class="modal" id="new_dev">
+				<div class="modal-header" id="new_dev_header" contenteditable="true" onclick="document.execCommand('selectAll',false,null)">
+				</div>
+				<div class="modal-content" id="new_dev_table">
+					this is the text inside the modal
+				</div>
+					<!--span class="close-btn">&times;</span-->
+				<div class="modal-footer" id="new_dev_footer">
+					I am the Footer
+				</div>
+			</div>
+			
 			<h1>Дрейф в зависимости от направления ветра</h1>
 			<div id="set_leeway_table">
 			</div>
+			
+
 		</div>
+
 
 
 		<script>
@@ -934,18 +732,95 @@
 				evt.currentTarget.className += " active";
 			}
 			
+			function drawDevTable(table, editable=false) {
+					//let s = '<table><colgroup><col><col style="background-color:red contenteditable:true" ><col><col style="background-color:red" contenteditable="true" ></colgroup>';
+					let e = editable ? ' contenteditable="true" inputmode="decimal" \
+						onclick="document.execCommand(\'selectAll\',false,null)" \
+						oninput="tabeditInput(this)" onblur="tabeditSubmit(this)" ' : '';
+					let s = '<table>';
+					// Each table contains 36 rows plus 2 extra rows which are repeated row0 and row1
+					maxIndex = (table.data.length - 2) / 2;
+					for (let j = 0; j < maxIndex; j++) {
+						s += '<tr><td>' + (j * 10).toString() + '</td><td' + e + '>' + table.data[j].toFixed(1).toString() + '</td><td>'  
+							+ ((maxIndex + j) * 10).toString() + '</td><td' + e +'>' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
+					}
+					s += '</table>';
+					return s;
+			}
+			
+			function tabeditClick() {
+				this.select; 
+			}
+			
+			function tabeditSubmit(e) {
+				if (e.childNodes.length > 0){
+					let s = e.childNodes[0].data;
+
+					for (let i = e.childNodes.length - 1; i >= 0; i--) {
+						e.childNodes[i].remove();
+					}
+					
+					e.insertBefore(new Text((s === undefined) ? "0.0": s), undefined);
+				}
+			}
+			
+			function tabeditInput(e) {
+				if (e.childNodes.length > 0){
+					let s = e.childNodes[0].data;
+					if (s === undefined) 
+					{
+						console.log("undef!")
+						return;
+					}
+					s = s.replace(/~[0-9\.\-]/gm, '');
+					e.childNodes[0].data = s;
+					if (isNaN(s) || !((s == '') || s.match(/[0-9\.\-]$/))) {
+						e.childNodes[0].data = s.replace(/.$/, '');
+					}
+					let range = document.createRange();
+					let sel = window.getSelection();
+					range.setStart(e.childNodes[0], e.childNodes[0].length)
+					range.collapse(true)
+    
+					sel.removeAllRanges()
+					sel.addRange(range)
+				}
+			}
+			
 			function drawDevTables() {
 				let s = "";
 				for (let i = 1; i < devTables.length; i++) {
-					s += "<h2>" + devTables[i].tag + "</h2>";
-					s += '<table>';
-					for (let j = 0; j < (devTables[i].data.length - 2) / 2; j++) {
-						s += '<tr><td>' + (j * 10).toString() + '</td><td>' + devTables[i].data[j].toFixed(1).toString() + '</td><td>'  
-							+ ((devTables[i].data.length / 2 - 1 + j) * 10).toString() + '</td><td>' + devTables[i].data[devTables[i].data.length / 2 - 1 + j].toFixed(1).toString() + '</td></tr>';
-					}
-					s += '</table><hr color="#ccc">';
+					s += '<button type="button" class="collapsible">+ ' + devTables[i].tag + '</button>';
+					s += '<div class="content">';
+					//s += "<h2>" + devTables[i].tag + "</h2>";
+					s += drawDevTable(devTables[i]);
+					s += '<hr color="#eee">';
+					s += '</div>'
+
 				}
-				$("#dev_tables")[0].innerHTML = s;
+				s += '<hr color="#eee"><button id="dev_add" class="just_button">Добавить</button>';
+				if (devTables.length > 4) {
+					s += ' <button class="just_button">Удалить</button>';
+				}
+
+
+				
+				$("#set_dev_tables")[0].innerHTML = s;
+				
+				coll = $(".collapsible");
+				for (let item of coll) {
+					item.onclick = function () {
+						this.classList.toggle("active");
+						let content = this.nextElementSibling;
+						if (content.style.display === "block") {
+							content.style.display = "none";
+							this.textContent = this.textContent.replace(/^\–/, '+');
+						} else {
+							content.style.display = "block";
+							this.textContent = this.textContent.replace(/^\+/, '–');
+						}
+					}
+				}
 			}
 			
 
@@ -977,25 +852,35 @@
 				}
 			}
 			
+			
+			//function devTableAdd() {
+			//	
+			//}
+			
 			if (!window.mobileAndTabletCheck()) {
-				cssRules = document.styleSheets[0].cssRules;
-				//cssRules.setCSSProperty("table", "width", "50%");
-				cssRules.setCSSProperty(".tab", "width", "50%");
-				cssRules.setCSSProperty(".tabcontent", "width", "50%");
-				cssRules.setCSSProperty(".tabcontent", "font-size", "100%");
-				cssRules.setCSSProperty(".tab button", "font-size", "100%");
-				cssRules.setCSSProperty(".block", "height", "30px");
-				cssRules.setCSSProperty(".block", "padding", "5px");
-				cssRules.setCSSProperty(".quantity", "width", "50%");
-				cssRules.setCSSProperty(".a_quantity", "width", "50%");
-				cssRules.setCSSProperty(".cb_label", "width", "15%");
-				cssRules.setCSSProperty(".cb", "top", "20%");
-				cssRules.setCSSProperty(".cb", "zoom", "1.5");
-				cssRules.setCSSProperty(".cb", "transform", "scale(1.5)");
-				cssRules.setCSSProperty(".cb", "-ms-transform", "scale(1.5)");
-				cssRules.setCSSProperty(".cb", "-webkit-transform", "scale(1.5)");
-				cssRules.setCSSProperty(".cb", "-o-transform",  "scale(1.5)");
-				cssRules.setCSSProperty(".cb", "-moz-transform:","scale(1.5)");
+				try {
+					cssRules = document.styleSheets[0].cssRules;
+					//cssRules.setCSSProperty("table", "width", "50%");
+					cssRules.setCSSProperty(".tab", "width", "50%");
+					cssRules.setCSSProperty(".tabcontent", "width", "50%");
+					cssRules.setCSSProperty(".tabcontent", "font-size", "100%");
+					cssRules.setCSSProperty(".tab button", "font-size", "100%");
+					cssRules.setCSSProperty(".block", "height", "30px");
+					cssRules.setCSSProperty(".block", "padding", "5px");
+					cssRules.setCSSProperty(".quantity", "width", "50%");
+					cssRules.setCSSProperty(".a_quantity", "width", "50%");
+					cssRules.setCSSProperty(".cb_label", "width", "15%");
+					cssRules.setCSSProperty(".cb", "top", "20%");
+					cssRules.setCSSProperty(".cb", "zoom", "1.5");
+					cssRules.setCSSProperty(".cb", "transform", "scale(1.5)");
+					cssRules.setCSSProperty(".cb", "-ms-transform", "scale(1.5)");
+					cssRules.setCSSProperty(".cb", "-webkit-transform", "scale(1.5)");
+					cssRules.setCSSProperty(".cb", "-o-transform",  "scale(1.5)");
+					cssRules.setCSSProperty(".cb", "-moz-transform:","scale(1.5)");
+				} catch (e) {
+					if(e.name !== 'SecurityError')
+						throw e;				
+				}
 			}			
 
 			{let dropboxes = $(".dev_table");
@@ -1036,7 +921,37 @@
 			$("#inv2_cb_stream")[0].onchange = inv2_CbStreamChange;
 			
 			drawDevTables();
+
+			let modalBtn = document.getElementById("dev_add")
+			let modalDevTable = $("#new_dev")[0];
+			//let closeBtn = document.querySelector(".close-btn")
+			modalBtn.onclick = function(){
+				$("#new_dev_header")[0].innerHTML = "Название";
+				let newTable = {tag: "Нет", data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+						0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]};
+				$("#new_dev_table")[0].innerHTML = drawDevTable(newTable, true); 
+				$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
+					+ '<button class="just_button" id="cancel">Отмена</button></div>';
+				$("#cancel")[0].onclick = function() {
+					modalDevTable.style.display = "none";
+				}
+				$("#save")[0].onclick = function() {
+					let [ok, table] = parseDevTable($("#new_dev_table")[0].innerHTML);
+					if (ok) {
+						modalDevTable.style.display = "none";
+					}
+				}
+				
+				modalDevTable.style.display = "block"
+			}
+			
 			document.getElementById("defaultOpen").click();
+			
+			function parseDevTable(html) {
+				let tableRows = $("#new_dev_table")[0].children[0].children[0].children;
+				return [false, false];
+			}
 			
 		</script>
 	</body>
