@@ -930,7 +930,8 @@
 				let newTable = {tag: "Нет", data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
 						0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]};
-				$("#new_dev_table")[0].innerHTML = drawDevTable(newTable, true); 
+				$("#new_dev_table")[0].innerHTML = '<textarea  inputmode="numeric" rows="15"\
+					style="font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:90%; height:auto; margin:auto;"></textarea>'; 
 				$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
 					+ '<button class="just_button" id="cancel">Отмена</button></div>';
 				$("#cancel")[0].onclick = function() {
