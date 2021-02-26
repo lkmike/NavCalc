@@ -800,7 +800,7 @@
 				}
 				s += '<hr color="#eee"><button id="dev_add" class="just_button">Добавить</button>';
 				if (devTables.length > 4) {
-					s += ' <button class="just_button">Удалить</button>';
+					s += ' <button id="dev_remove" class="just_button">Удалить</button>';
 				}
 
 
@@ -914,7 +914,7 @@
 				}
 			}
 
-			for (item of $(".dev_table")) {
+			for (let item of $(".dev_table")) {
 				item.onchange = function() {
 						console.log("Select %d", this.selectedIndex)
 						setupDevSelectors(this.selectedIndex);
@@ -940,40 +940,56 @@
 			$("#inv2_cb_stream")[0].onchange = inv2_CbStreamChange;
 			
 			drawDevTables();
+			devModalMess();
 
-			let modalBtn = document.getElementById("dev_add")
-			let modalDevTable = $("#new_dev")[0];
-			//let closeBtn = document.querySelector(".close-btn")
-			modalBtn.onclick = function(){
-				$("#new_dev_header")[0].innerHTML = "Новая таблица девиации";
-				$("#new_dev_table")[0].innerHTML = 
-					'<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;"> \
-						<label for="dev_new_name" style="margin-right:20px;">Название:</label> \
-						<input style="font-size:100%; background-color:white; position:relative; padding:4px; width:60%; height:auto; margin:0px;" id="dev_new_name" type="text" /> \
-					</div> \
-					<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;" >Введите 36 значений девиации от 0° до 350° через пробел</div> \
-					<textarea id="deviations" inputmode="numeric" rows="15"\
-					style="font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:80%; height:auto; margin:auto;" ></textarea>'; 
-				$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
-					+ '<button class="just_button" id="cancel">Отмена</button></div>';
+			function devModalMess() {
+				let modalBtn = document.getElementById("dev_add")
+				let modalDevTable = $("#new_dev")[0];
+				//let closeBtn = document.querySelector(".close-btn")
+				modalBtn.onclick = function(){
+					$("#new_dev_header")[0].innerHTML = "Новая таблица девиации";
+					$("#new_dev_table")[0].innerHTML = 
+						'<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;"> \
+							<label for="dev_new_name" style="margin-right:20px;">Название:</label> \
+							<input style="font-size:100%; background-color:white; position:relative; padding:4px; width:60%; height:auto; margin:0px;" id="dev_new_name" type="text" /> \
+						</div> \
+						<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;" >Введите 36 значений девиации от 0° до 350° через пробел</div> \
+						<textarea id="deviations" inputmode="numeric" rows="15"\
+						style="font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:80%; height:auto; margin:auto;" ></textarea>'; 
+					$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
+						+ '<button class="just_button" id="cancel">Отмена</button></div>';
 
-				let newTable = {tag: "Нет", data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
-						0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]};
-				$("#cancel")[0].onclick = function() {
-					modalDevTable.style.display = "none";
-				}
-				$("#save")[0].onclick = function() {
-					let [ok, table] = parseDevTable($("#new_dev_table")[0].innerHTML);
-					if (ok) {
+					let newTable = {tag: "Нет", data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+							0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+							0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]};
+					$("#cancel")[0].onclick = function() {
 						modalDevTable.style.display = "none";
-						devTables[devTables.length] = {tag: $("#dev_new_name")[0].value, data: table};
-						setupDevSelectors(-1);
-						drawDevTables();
 					}
+					$("#save")[0].onclick = function() {
+						let [ok, table] = parseDevTable($("#new_dev_table")[0].innerHTML);
+						if (ok) {
+							modalDevTable.style.display = "none";
+							devTables[devTables.length] = {tag: $("#dev_new_name")[0].value, data: table};
+							setupDevSelectors(-1);
+							drawDevTables();
+							devModalMess();
+						}
+					}
+					modalDevTable.style.display = "block"
 				}
 				
-				modalDevTable.style.display = "block"
+				modalBtn = document.getElementById("dev_remove");
+				if (modalBtn != null) {
+					modalBtn.onclick = function() {
+						len = devTables.length;
+						if (len > 4) {
+							devTables.pop();
+							setupDevSelectors(0);
+							drawDevTables();
+							devModalMess();
+						}
+					}
+				}
 			}
 			
 			document.getElementById("defaultOpen").click();
