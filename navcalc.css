@@ -48,26 +48,12 @@ body {
 	font-family: sans-serif;
 }
 
-.valid .block {
+.block.valid {
 	background-color: #f0fff0;
-	height: 70px;
-	padding: 20px;
-	position: relative;
-	border-width: 1px;
-	border-color: #dddddd;
-	border-style: dashed;
-	font-family: sans-serif;
 }
 
-.invalid .block {
-	background-color: #fff0f0;
-	height: 70px;
-	padding: 20px;
-	position: relative;
-	border-width: 1px;
-	border-color: #dddddd;
-	border-style: dashed;
-	font-family: sans-serif;
+.block.invalid{
+	background-color: #fFd0d0;
 }
 
 input::-webkit-outer-spin-button,
@@ -246,6 +232,19 @@ h2 {
 	font-size: 100%;
 }
 
+.wide_button {
+	background-color: #eee;
+	color: #444;
+	margin: 0px;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: center;
+	outline: none;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 100%;
+}
 .content {
 	padding: 0 18px;
 	display: none;
