@@ -639,9 +639,9 @@
 				}
 			}
 		
-			if (!window.mobileAndTabletCheck()) {
+			/*if (!window.mobileAndTabletCheck()) {
 				try {
-					cssRules = document.styleSheets[0].cssRules;
+					let cssRules = document.styleSheets[0].cssRules;
 					//cssRules.setCSSProperty("table", "width", "50%");
 					cssRules.setCSSProperty(".tab", "width", "50%");
 					cssRules.setCSSProperty(".tabcontent", "width", "50%");
@@ -663,7 +663,46 @@
 					if(e.name !== 'SecurityError')
 						throw e;				
 				}
-			}			
+			}		*/	
+
+			function mobileCheck() {
+				if (!window.mobileAndTabletCheck()) {
+
+					for (let item of $(".tab")) {
+						item.setAttribute("style", "width:40%;");
+					}
+
+					for (let item of $(".tab button")) {
+						item.setAttribute("style", "font-size:80%;");
+					}
+					
+					for (let item of $(".tabcontent")) {
+						item.setAttribute("style", "width:40%; font-size:100%;");
+					}
+
+					for (let item of $(".block")) {
+						item.setAttribute("style", "height:30px; padding:5px;");
+					}
+					
+					for (let item of $(".quantity")) {
+						item.setAttribute("style", "width:40%;");
+					}
+					
+					for (let item of $(".a_quantity")) {
+						item.setAttribute("style", "width:40%;");
+					}
+					
+					for (let item of $(".cb_label")) {
+						item.setAttribute("style", "width:15%;");
+					}
+
+					for (let item of $(".cb")) {
+						item.setAttribute('style', 'top:20%; zoom:1.5; transform:scale(1.5); -ms-transform:scale(1.5); \
+								-webkit-transform:scale(1.5); -o-transform:scale(1.5); -moz-transform:scale(1.5)');
+					}
+				}	
+			}
+				
 
 			$(function(){
 				$(document).on('click','input[type=text]',function(){ this.select(); });
@@ -736,6 +775,8 @@
 			
 			drawDevTables();
 			devModalMess();
+			
+			mobileCheck();
 
 			document.getElementById("defaultOpen").click();
 			
