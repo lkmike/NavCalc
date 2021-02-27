@@ -224,6 +224,7 @@ h2 {
 	color: #444;
 	padding: 18px;
 	width: 100%;
+	display: block;
 	border: none;
 	text-align: left;
 	outline: none;
@@ -264,6 +265,26 @@ h2 {
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: 80%;
+}
+
+.cross_button {
+	background-color: #eee;
+	color: #444;
+	// background-color: red;
+	padding: 18px;
+	width: 100px;
+	height: auto;
+	margin: 0px;
+	margin-left: -100px;
+	position: relative;
+	display: block;
+	float: right;
+	border: none;
+	text-align: right;
+	outline: none;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 100%;
 }
 
 
