@@ -359,28 +359,32 @@ tr.dtr:nth-child(even) {
 
 th {
 	text-align: center;
+	font-size: 80%;
 	border-collapse: collapse;
 }
 
 th.course {
 	text-align: right;
-	border-top: solid ;
-	border-bottom: solid ;
+	width: 10em;
+	padding-right: 50px;
+}
+
+td.course {
+	text-align: right;
+	width: 10em;
 	padding-right: 50px;
 }
 
 td.more {
-	text-align: right;
-	width: 3em;
-	border-top: solid ;
+	text-align: left;
+	width: 1em;
 	border-bottom: solid ;
 	border-collapse: collapse;
 }
 
 td.less {
-	text-align: right;
-	width: 3em;
-	border-bottom: solid ;
+	text-align: left;
+	width: 1em;
 	border-collapse: collapse;
 }
 
@@ -389,20 +393,36 @@ td.ctw {
 	width: 7em;
 	border-bottom: solid ;
 	border-collapse: collapse;
+	
 }
 
 td.ctw.first {
-	border-top: solid ;
+	border-top: none ;
 }
 
 td.ctw.last {
-	border-bottom: solid ;
+	border-bottom: none ;
 }
 
 td.drift {
 	text-align: center;
-	border-top: solid ;
-	border-bottom: solid ;
 	border-collapse: collapse;
+	font-size: 120%;
+}
+
+td.course.gray {
+	background-color: #f1f1f1;
+}
+
+td.drift.gray {
+	background-color: #f1f1f1;
+}
+
+td.more.gray {
+	background-color: #f1f1f1;
+}
+
+td.less.gray {
+	background-color: #f1f1f1;
 }
 
