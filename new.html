@@ -77,7 +77,7 @@
 				<span class="quantity">Направление</span>
 				<input id="dir_stream_direction" class="input_field" type="number" min="0" max="359.99" step=".1" value="112">
 			</div>
-			<div class="block" id="dir_stream_vel" style="padding:0px">
+			<div class="block for_button">
 				<button class="wide_button" id="dir_udpate">Рассчитать</button>
 			</div>
 			<hr>
@@ -109,8 +109,8 @@
 			<div class="block valid">
 				<span class="a_quantity">ПУ<sub>&alpha;&beta;</sub></span><span id="dir_PUab" class="answer"></span>
 			</div>
-			<div class="block" style="padding:0px">
-				<button class="wide_button" id="inv2_useResults">Использовать конечную точку как исходную</button>
+			<div class="block for_button">
+				<button class="wide_button" id="dir_useResults">Использовать конечную точку как исходную</button>
 			</div>
 		</div>
 
@@ -173,7 +173,7 @@
 				<span class="quantity">Направление</span>
 				<input id="inv1_stream_direction" class="input_field" type="number" min="0" max="359.99" step=".1" value="112">
 			</div>
-			<div class="block" style="padding:0px">
+			<div class="block for_button">
 				<button class="wide_button" id="inv1_udpate">Рассчитать</button>
 			</div>
 			<hr>
@@ -205,8 +205,8 @@
 			<div class="block valid">
 				<span class="a_quantity">&beta;</span><span id="inv1_beta" class="answer"></span>
 			</div>
-			<div class="block" style="padding:0px">
-				<button class="wide_button" id="inv2_useResults">Использовать конечную точку как исходную</button>
+			<div class="block for_button">
+				<button class="wide_button" id="inv1_useResults">Использовать конечную точку как исходную</button>
 			</div>
 		</div>
 
@@ -268,7 +268,7 @@
 				<span class="quantity">Направление</span>
 				<input id="inv2_stream_direction" class="input_field" type="number" min="0" max="359.99" step=".1" value="112">
 			</div>
-			<div class="block" style="padding:0px">
+			<div class="block for_button">
 				<button class="wide_button" id="inv2_udpate">Рассчитать</button>
 			</div>
 			<hr>
@@ -300,14 +300,16 @@
 			<div class="block valid">
 				<span class="a_quantity">РОЛ</span><span id="inv2_log_increment" class="answer"></span>
 			</div>
-			<div class="block" style="padding:0px">
+			<div class="block for_button">
 				<button class="wide_button" id="inv2_useResults">Использовать конечную точку как исходную</button>
 			</div>
 		</div> 
 
 		<div id="Settings" class="tabcontent">
-			<h1>Таблицы девиации</h1>
-			<div id="set_dev_tables">
+			<div class="block for_button">
+				<h1>Таблицы девиации</h1>
+			</div>
+			<div id="set_dev_tables" >
 			</div>
 
 			<div class="modal" id="new_dev">
@@ -319,8 +321,10 @@
 				<div class="modal-footer" id="new_dev_footer">
 				</div>
 			</div>
-			
-			<h1>Дрейф в зависимости от направления ветра</h1>
+
+			<div class="block for_button">
+				<h1>Дрейф в зависимости от направления ветра</h1>
+			</div>
 			<div id="set_leeway_table">
 			</div>
 			
@@ -534,16 +538,12 @@
 			}
 			
 			function drawDevTable(table, editable=false) {
-				//let s = '<table><colgroup><col><col style="background-color:red contenteditable:true" ><col><col style="background-color:red" contenteditable="true" ></colgroup>';
-				let e = editable ? ' contenteditable="true" inputmode="decimal" \
-					onclick="document.execCommand(\'selectAll\',false,null)" \
-					oninput="tabeditInput(this)" onblur="tabeditSubmit(this)" ' : '';
 				let s = '<table>';
 				// Each table contains 36 rows plus 2 extra rows which are repeated row0 and row1
 				let maxIndex = (table.data.length - 2) / 2;
 				for (let j = 0; j < maxIndex; j++) {
-					s += '<tr><td>' + (j * 10).toString() + '</td><td' + e + '>' + table.data[j].toFixed(1).toString() + '</td><td>'  
-						+ ((maxIndex + j) * 10).toString() + '</td><td' + e +'>' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
+					s += '<tr><td>' + (j * 10).toString() + '</td><td>' + table.data[j].toFixed(1).toString() + '</td><td>'  
+						+ ((maxIndex + j) * 10).toString() + '</td><td>' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
 				}
 				s += '</table>';
 				return s;
@@ -552,19 +552,18 @@
 			function drawDevTables() {
 				let s = "";
 				for (let i = 1; i < devTables.length; i++) {
-					s += '<div>'
+					s += '<div class="block for_button" style="height:auto; ">'
 					if (i > 3) {
-						s += ' <button tag="' + i.toString() + '" class="dev_remove cross_button">&times;</button>';
+						s += ' <button tag="' + i.toString() + '" class="dev_remove wide_button cross_button" >&times;</button>';
 					}
-					s += '<button type="button" class="collapsible">+ ' + devTables[i].tag + '</button>';
+					s += '<button type="button" class="wide_button collapsible"  >+ ' + devTables[i].tag + '</button>';
 					s += '<div class="content">';
 					s += drawDevTable(devTables[i]);
-					s += '<hr color="#eee">';
 					s += '</div>';
 					s += '</div>'
 
 				}
-				s += '<hr color="#eee"><button id="dev_add" class="wide_button">Добавить</button>';
+				s += '<div class="block for_button"><button id="dev_add" class="wide_button">Добавить</button></div>';
 				
 				$("#set_dev_tables")[0].innerHTML = s;
 				
@@ -577,6 +576,7 @@
 						let i = this.attributes.getNamedItem("tag").value;
 						devTables.splice(i, 1);
 						drawDevTables();
+						setupDevSelectors();
 					}
 				}
 				
@@ -615,7 +615,14 @@
 						opt.text = devTables[i].tag;
 						item.options[item.options.length] = opt;
 					}
-					item.selectedIndex = (selIndex > -1) ? selIndex: si;
+					let nsi =  (si >= item.options.length) ? 0 : si;
+					if (selIndex >= item.options.length) {
+						selIndex = 0;
+					}
+					item.selectedIndex = (selIndex > -1) ? selIndex : nsi;
+					if (nsi != si) {
+						invalidateAnswers();
+					}
 				}
 			}
 			
@@ -681,7 +688,11 @@
 					}
 
 					for (let item of $(".block")) {
-						item.setAttribute("style", "height:30px; padding:5px;");
+						item.setAttribute("style", "height:30px; ");
+					}
+
+					for (let item of $(".block.for_button")) {
+						item.setAttribute("style", "height:auto; ");
 					}
 					
 					for (let item of $(".quantity")) {
@@ -702,6 +713,8 @@
 					}
 				}	
 			}
+
+			mobileCheck();
 				
 
 			$(function(){
@@ -776,7 +789,63 @@
 			drawDevTables();
 			devModalMess();
 			
-			mobileCheck();
+			$("#dir_useResults")[0].onclick = function() {
+				let lat = $("#dir_new_lat").text();
+				let long = $("#dir_new_long").text();
+
+				if ((lat == 'NaN') || (long == 'NaN')) {
+					console.log("return")
+					return;
+				}
+
+				$("#dir_lat").val(lat);
+				$("#inv1_lat").val(lat);
+				$("#inv2_lat").val(lat);
+
+				$("#dir_long").val(long);
+				$("#inv1_long").val(long);
+				$("#inv2_long").val(long);
+				invalidateAnswers();
+			}
+ 			
+			$("#inv1_useResults")[0].onclick = function() {
+				let lat = $("#inv1_new_lat").text();
+				let long = $("#inv1_new_long").text();
+
+				if ((lat == 'NaN') || (long == 'NaN')) {
+					console.log("return")
+					return;
+				}
+
+				$("#dir_lat").val(lat);
+				$("#inv1_lat").val(lat);
+				$("#inv2_lat").val(lat);
+
+				$("#dir_long").val(long);
+				$("#inv1_long").val(long);
+				$("#inv2_long").val(long);
+				invalidateAnswers();
+			}
+ 			
+			$("#inv2_useResults")[0].onclick = function() {
+				let lat = $("#inv2_new_lat").val();
+				let long = $("#inv2_new_long").val();
+				
+				if ((lat == 'NaN') || (long == 'NaN')) {
+					console.log("return")
+					return;
+				}
+					
+				$("#dir_lat").val(lat);
+				$("#inv1_lat").val(lat);
+				$("#inv2_lat").val(lat);
+
+				$("#dir_long").val(long);
+				$("#inv1_long").val(long);
+				$("#inv2_long").val(long);
+				invalidateAnswers();
+			}
+ 			
 
 			document.getElementById("defaultOpen").click();
 			
