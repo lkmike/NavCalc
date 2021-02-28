@@ -196,24 +196,6 @@ input:checked + .slider:before {
 	transform: translateX(80%, -50%);
 }
 
-table {
-	font-family: arial, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
-}
-
-td {
-	/*border: 1px solid #dddddd;*/
-	/*border: 0px;*/
-	text-align: right;
-	padding: 8px;
-	padding-right: 30px;
-}
-
-tr:nth-child(even) {
-	background-color: #f1f1f1;
-}
-
 h1 {
 	font-family: sans-serif;
 	font-weight: bold;
@@ -354,3 +336,73 @@ h2 {
   to {top:0; opacity:1}
 }
 */
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td.dtc {
+	/*border: 1px solid #dddddd;*/
+	/*border: 0px;*/
+	text-align: right;
+	padding: 8px;
+	padding-right: 30px;
+	outline: none;
+}
+
+tr.dtr:nth-child(even) {
+	background-color: #f1f1f1;
+}
+
+
+th {
+	text-align: center;
+	border-collapse: collapse;
+}
+
+th.course {
+	text-align: right;
+	border-top: solid ;
+	border-bottom: solid ;
+	padding-right: 50px;
+}
+
+td.more {
+	text-align: right;
+	width: 3em;
+	border-top: solid ;
+	border-bottom: solid ;
+	border-collapse: collapse;
+}
+
+td.less {
+	text-align: right;
+	width: 3em;
+	border-bottom: solid ;
+	border-collapse: collapse;
+}
+
+td.ctw {
+	text-align: center;
+	width: 7em;
+	border-bottom: solid ;
+	border-collapse: collapse;
+}
+
+td.ctw.first {
+	border-top: solid ;
+}
+
+td.ctw.last {
+	border-bottom: solid ;
+}
+
+td.drift {
+	text-align: center;
+	border-top: solid ;
+	border-bottom: solid ;
+	border-collapse: collapse;
+}
+

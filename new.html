@@ -5,7 +5,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="jquery.maskedinput.min.js"></script>
 		<link rel="stylesheet" href="navcalc.css">
-		<title>Калькулятор прокладки</title>
+		<title>Навигационный калькулятор</title>
 	</head>
 
 	<body>
@@ -312,6 +312,48 @@
 			<div id="set_dev_tables" >
 			</div>
 
+			<div class="block for_button">
+				<h1>Курсы и дрейф</h1>
+			</div>
+			<div id="set_leeway_table">
+			</div>
+			
+			<table>
+				<tr>
+					<th></th><th colspan="2">Угол к ветру</th><th>Дрейф</th>
+				</tr>
+				<tr>
+					<th class="course" rowspan="2">Левентик</th>	<td class="more">≥</td>	<td class="ctw first">0</td>	<td class="drift" rowspan="2" contenteditable inputmode="numeric">0</td>
+				</tr>
+				<tr>
+																	<td class="less"><</td>	<td class="ctw" rowspan="2" contenteditable inputmode="numeric">20</td>
+				</tr>
+				<tr>
+					<th class="course" rowspan="2">Бейдевинд</th>	<td class="more">≥</td>									<td class="drift" rowspan="2" contenteditable inputmode="numeric">8</td>
+				</tr>
+				<tr>
+																	<td class="less"><</td>	<td class="ctw" rowspan="2" contenteditable inputmode="numeric">80</td>
+				</tr>
+				<tr>
+					<th class="course" rowspan="2">Галфвинд</th>	<td class="more">≥</td>									<td class="drift" rowspan="2" contenteditable inputmode="numeric">4</td>
+				</tr>
+				<tr>
+																	<td class="less"><</td>	<td class="ctw" rowspan="2" contenteditable inputmode="numeric">100</td>
+				</tr>
+				<tr>
+					<th class="course" rowspan="2">Бакштаг</th>		<td class="more">≥</td>									<td class="drift" rowspan="2" contenteditable inputmode="numeric">2</td>
+				</tr>
+				<tr>
+																	<td class="less"><</td>	<td class="ctw" rowspan="2" contenteditable inputmode="numeric">160</td>
+				</tr>
+				<tr>
+					<th class="course" rowspan="2">Фордевинд</th>	<td class="more">≥</td>									<td class="drift" rowspan="2" contenteditable inputmode="numeric">0</td>
+				</tr>
+				<tr>
+																	<td class="less"><</td>	<td class="ctw last">180</td>
+				</tr>
+			</table>
+
 			<div class="modal" id="new_dev">
 				<div class="modal-header" id="new_dev_header">
 				</div>
@@ -322,11 +364,6 @@
 				</div>
 			</div>
 
-			<div class="block for_button">
-				<h1>Дрейф в зависимости от направления ветра</h1>
-			</div>
-			<div id="set_leeway_table">
-			</div>
 			
 
 		</div>
@@ -371,15 +408,6 @@
 						]
 				}
 			];
-			
-			CSSRuleList.prototype.setCSSProperty = function  (selector, name, value, priority = "") {
-				for (let i = 0; i < cssRules.length; i++) {
-					if (selector === cssRules[i].selectorText) {
-						cssRules[i].style.setProperty(name, value, priority);
-						break;
-					}
-				}
-			}
 			
 			function dir_UpdateAnswers() {
 				let declination = parseFloat($("#dir_declination")[0].value);
@@ -542,8 +570,9 @@
 				// Each table contains 36 rows plus 2 extra rows which are repeated row0 and row1
 				let maxIndex = (table.data.length - 2) / 2;
 				for (let j = 0; j < maxIndex; j++) {
-					s += '<tr><td>' + (j * 10).toString() + '</td><td>' + table.data[j].toFixed(1).toString() + '</td><td>'  
-						+ ((maxIndex + j) * 10).toString() + '</td><td>' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
+					s += '<tr class="dtr"><td class="dtc">' + (j * 10).toString() + '</td><td class="dtc">' 
+						+ table.data[j].toFixed(1).toString() + '</td><td class="dtc">'  
+						+ ((maxIndex + j) * 10).toString() + '</td><td class="dtc">' + table.data[maxIndex + j].toFixed(1).toString() + '</td></tr>';
 				}
 				s += '</table>';
 				return s;
@@ -646,32 +675,6 @@
 				}
 			}
 		
-			/*if (!window.mobileAndTabletCheck()) {
-				try {
-					let cssRules = document.styleSheets[0].cssRules;
-					//cssRules.setCSSProperty("table", "width", "50%");
-					cssRules.setCSSProperty(".tab", "width", "50%");
-					cssRules.setCSSProperty(".tabcontent", "width", "50%");
-					cssRules.setCSSProperty(".tabcontent", "font-size", "100%");
-					cssRules.setCSSProperty(".tab button", "font-size", "100%");
-					cssRules.setCSSProperty(".block", "height", "30px");
-					cssRules.setCSSProperty(".block", "padding", "5px");
-					cssRules.setCSSProperty(".quantity", "width", "50%");
-					cssRules.setCSSProperty(".a_quantity", "width", "50%");
-					cssRules.setCSSProperty(".cb_label", "width", "15%");
-					cssRules.setCSSProperty(".cb", "top", "20%");
-					cssRules.setCSSProperty(".cb", "zoom", "1.5");
-					cssRules.setCSSProperty(".cb", "transform", "scale(1.5)");
-					cssRules.setCSSProperty(".cb", "-ms-transform", "scale(1.5)");
-					cssRules.setCSSProperty(".cb", "-webkit-transform", "scale(1.5)");
-					cssRules.setCSSProperty(".cb", "-o-transform",  "scale(1.5)");
-					cssRules.setCSSProperty(".cb", "-moz-transform:","scale(1.5)");
-				} catch (e) {
-					if(e.name !== 'SecurityError')
-						throw e;				
-				}
-			}		*/	
-
 			function mobileCheck() {
 				if (!window.mobileAndTabletCheck()) {
 
@@ -856,13 +859,13 @@
 				modalBtn.onclick = function(){
 					$("#new_dev_header")[0].innerHTML = "Новая таблица девиации";
 					$("#new_dev_table")[0].innerHTML = 
-						'<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;"> \
+						'<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px; display:flex; align-items:center"> \
 							<label for="dev_new_name" style="margin-right:20px;">Название:</label> \
-							<input style="font-size:100%; background-color:white; position:relative; padding:4px; width:60%; height:auto; margin:0px;" id="dev_new_name" type="text" /> \
+							<input style="font-family:monospace; font-size:100%; background-color:white; position:relative; padding:4px; width:60%; height:auto; border:solid #ccc; outline:none; margin:0px; flex-grow: 1;" id="dev_new_name" type="text" /> \
 						</div> \
 						<div style="font-family:sans-serif; font-style: italic; font-size:90%; margin-bottom:20px;" >36 значений девиации через 10° от 0° до 350° через пробел</div> \
 						<div contenteditable id="deviations" inputmode="numeric" \
-						style="font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:auto; height:144pt; border:solid #ccc; outline:none; margin:auto;" ></div>'; 
+						style="font-family:monospace; font-size:100%; background-color:white; display:block; position:relative; padding:18px; width:auto; height:400pt; border:solid #ccc; outline:none; margin:auto;" ></div>'; 
 					$("#new_dev_footer")[0].innerHTML = '<div><button class="just_button" style="margin-right:20px" id="save">Сохранить</button>'
 						+ '<button class="just_button" id="cancel">Отмена</button></div>';
 
