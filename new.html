@@ -551,10 +551,11 @@
 			function drawDriftTable(t, editable=true) {
 				let s = '';
 				s += '<table><tr class="ctr"><th class="course">Курс</th><th>Дрейф</th><th colspan="2">Углы к ветру</th></tr>\
+						<tr><td></td><td></td><td class="less">&nbsp;</td><td class="ctw first" rowspan="2">0</td></tr>\
 						<tr class="ctr"><td class="course gray" rowspan="2">Левентик</td><td id="drift-nogo" class="drift gray" rowspan="2" contenteditable=' 
 					+ editable.toString() + ' inputmode="numeric">'
 					+ t.drift.nogo.toString()
-					+ '</td><td class="more gray">≥</td><td class="ctw first">0</td></tr>\
+					+ '</td><td class="more gray">≥</td></tr>\
 						<tr class="ctr"><td class="less gray"><</td><td id="boundary-nogo" class="ctw" rowspan="2" contenteditable=' 
 					+ editable.toString() + ' inputmode="numeric">'
 					+ t.boundaries.nogo.toString()
@@ -579,7 +580,8 @@
 					+ '</td></tr><tr class="ctr"><td class="course gray" rowspan="2">Фордевинд</td>	<td id="drift-downwind" class="drift gray" rowspan="2" contenteditable=' 
 					+ editable.toString() + ' inputmode="numeric">'
 					+ t.drift.downwind.toString()
-					+ '</td><td class="more gray">≥</td></tr><tr class="ctr"><td class="less gray">≤</td><td class="ctw last">180</td></tr></table>'
+					+ '</td><td class="more gray">≥</td></tr><tr class="ctr"><td class="less gray">≤</td><td class="ctw last" rowspan="2">180</td></tr>\
+						<tr><td></td><td></td><td class="less">&nbsp;</td></tr></table>'
 					return s;
 			}
 			
