@@ -438,7 +438,7 @@ td.less.gray {
 }
 
 .tablename-input {
-	font-family:monospace; 
+	font-family:sans-serif; 
 	font-size:100%; 
 	background-color:white; 
 	position:relative; 

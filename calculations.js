@@ -60,7 +60,7 @@ Array.prototype.toDegrees = function () {
 	return this[0] + this[1] / 60.0;
 }
 
-function alpha(trueCourse, windDirection) {
+function alpha_(trueCourse, windDirection) {
 	let difference = (windDirection - trueCourse).mod(360);
 	if ((0 <= difference) && (difference < 80)) {
 		return -8;
@@ -77,6 +77,35 @@ function alpha(trueCourse, windDirection) {
 	} else { // if ((280<=difference) && (difference < 360))
 		return 8;
 	}
+}
+
+function alpha(trueCourse, windDirection, driftTable) {
+	let difference = (windDirection - trueCourse).mod(360);
+	let result;
+	if ((0 <= difference) && (difference < driftTable.boundaries.nogo)) {
+		result = -driftTable.drift.nogo;
+	} else if ((driftTable.boundaries.nogo <= difference) && (difference < driftTable.boundaries.close)) {
+		result = -driftTable.drift.close;
+	} else if ((driftTable.boundaries.close <= difference) && (difference < driftTable.boundaries.beam)) {
+		result = -driftTable.drift.beam;
+	}  else if ((driftTable.boundaries.beam <= difference) && (difference < driftTable.boundaries.broad)) {
+		result = -driftTable.drift.broad;
+	} else if ((driftTable.boundaries.broad <= difference) && (difference <= 180)) {
+		result = -driftTable.drift.downwind;
+	} else if ((180 < difference) && (difference <= (360 - driftTable.boundaries.broad))) {
+		result = driftTable.drift.downwind;
+	} else if (((360 - driftTable.boundaries.broad) < difference) && (difference <= (360 - driftTable.boundaries.beam))) {
+		result = driftTable.drift.broad;
+	} else if (((360 - driftTable.boundaries.beam) < difference) && (difference <= (360 - driftTable.boundaries.close))) {
+		result = driftTable.drift.beam;
+	} else if (((360 - driftTable.boundaries.close) < difference) && (difference <= (360 - driftTable.boundaries.nogo))) {
+		return driftTable.drift.close;
+	} else if (((360 - driftTable.boundaries.nogo) < difference) && (difference <= 360)) {
+		result = driftTable.drift.nogo;
+	}
+	console.log(difference)
+	console.log(result);
+	return result;
 }
 
 Number.prototype.toRadians = function () {
@@ -137,10 +166,10 @@ Array.prototype.angle = function (other) {
 }
 
 function directProblem(declination, lat, long, compassCourse, boatVelocity, logIncrement,
-		windDirection, streamVelocity, streamDirection, useWind, useStream, devTable) {
+		windDirection, streamVelocity, streamDirection, useWind, useStream, devTable, driftTable) {
 	let [magneticCourse, deviation] = compassCourse.magneticCourseAndDeviation(devTable);
 	let trueCourse = magneticCourse + declination;
-	let alph = useWind ? alpha(trueCourse, windDirection) : 0;
+	let alph = useWind ? alpha(trueCourse, windDirection, driftTable) : 0;
 	let cts = trueCourse + alph;
 	let wayOverWater = [Math.cos(cts.toRadians()), Math.sin(cts.toRadians())]
 		.numberMul(logIncrement);
@@ -156,7 +185,7 @@ function directProblem(declination, lat, long, compassCourse, boatVelocity, logI
 }
 
 function inverseProblem1(declination, lat, long, cog, boatVelocity, logIncrement,
-		windDirection, streamVelocity, streamDirection, useWind, useStream, devTable) {
+		windDirection, streamVelocity, streamDirection, useWind, useStream, devTable, driftTable) {
 	let unitVecOverGround = [Math.cos(cog.toRadians()), Math.sin(cog.toRadians())];
 	let unitStream = [Math.cos(streamDirection.toRadians()), Math.sin(streamDirection.toRadians())];
 	
@@ -178,7 +207,7 @@ function inverseProblem1(declination, lat, long, cog, boatVelocity, logIncrement
 	let cts = cog - beta;
 
 	//// Not exactly!
-	let alph = useWind ? alpha(cts, windDirection) : 0;
+	let alph = useWind ? alpha(cts, windDirection, driftTable) : 0;
 
 	let trueCourse = cts - alph;
 	let magneticCourse = trueCourse - declination;
@@ -188,7 +217,7 @@ function inverseProblem1(declination, lat, long, cog, boatVelocity, logIncrement
 }
 
 function inverseProblem2(declination, lat, long, newLat, newLong, boatVelocity, 
-		windDirection, streamVelocity, streamDirection, useWind, useStream, devTable) {
+		windDirection, streamVelocity, streamDirection, useWind, useStream, devTable, driftTable) {
 	let wayOverGround = [newLat - lat, (newLong - long) * Math.cos(((lat + newLat) / 2).toRadians())].numberMul(60.0);
 	let unitVecOverGround = wayOverGround.numberMul(1 / wayOverGround.norm());
 	let cog = [1, 0].angle(unitVecOverGround).toDegrees();
@@ -211,7 +240,7 @@ function inverseProblem2(declination, lat, long, newLat, newLong, boatVelocity,
 	let cts = cog - beta;
 
 	//// Not exactly!
-	let alph = useWind ? alpha(cts, windDirection) : 0;
+	let alph = useWind ? alpha(cts, windDirection, driftTable) : 0;
 
 	let trueCourse = cts - alph;
 	let magneticCourse = trueCourse - declination;
