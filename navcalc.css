@@ -343,6 +343,10 @@ table {
 	width: 100%;
 }
 
+td {
+	border-collapse: collapse;
+}
+
 td.dtc {
 	/*border: 1px solid #dddddd;*/
 	/*border: 0px;*/
@@ -359,8 +363,8 @@ tr.dtr:nth-child(even) {
 
 th {
 	text-align: center;
-	font-size: 80%;
-	border-collapse: collapse;
+	font-size: 90%;
+	padding: 18px;
 }
 
 th.course {
@@ -378,22 +382,18 @@ td.course {
 td.more {
 	text-align: left;
 	width: 1em;
-	border-bottom: solid ;
-	border-collapse: collapse;
+	border-bottom: solid #444;
 }
 
 td.less {
 	text-align: left;
 	width: 1em;
-	border-collapse: collapse;
 }
 
 td.ctw {
 	text-align: center;
-	width: 7em;
-	border-bottom: solid ;
-	border-collapse: collapse;
-	
+	width: 9em;
+	border-bottom: solid #444;
 }
 
 td.ctw.first {
@@ -406,7 +406,6 @@ td.ctw.last {
 
 td.drift {
 	text-align: center;
-	border-collapse: collapse;
 	font-size: 120%;
 }
 
@@ -426,3 +425,42 @@ td.less.gray {
 	background-color: #f1f1f1;
 }
 
+
+.explanation {
+	font-family: sans-serif; 
+	font-style: italic; 
+	font-size:90%; 
+}
+
+.tablename-container {
+	display:flex; 
+	align-items:center;
+}
+
+.tablename-input {
+	font-family:monospace; 
+	font-size:100%; 
+	background-color:white; 
+	position:relative; 
+	padding:4px; 
+	width:60%; 
+	height:auto; 
+	border:solid #ccc; 
+	outline:none; 
+	margin:0px; 
+	flex-grow: 1;
+}
+
+.tabledata-textarea {
+	font-family:monospace; 
+	font-size:100%; 
+	background-color:white; 
+	display:block; 
+	position:relative; 
+	padding:18px; 
+	width:auto; 
+	height:300pt; 
+	border:solid #ccc; 
+	outline:none; 
+	margin:auto;
+}
